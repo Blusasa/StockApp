@@ -1,10 +1,10 @@
+import React from 'react';
 import { useEffect } from 'react';
 
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useFonts, Poppins_300Light_Italic, Poppins_400Regular } from '@expo-google-fonts/poppins';
 
-import { LinearGradient } from 'expo-linear-gradient';
+import SplashScreen from './app/components/frontPage/SplashScreen';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -19,15 +19,16 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
+    <View>
+      <SplashScreen/>
+      {/* <LinearGradient
         colors={['#B401FC', '#E91EAC']}
         locations={[0.65, 0.95]}
         style={{flex: 1, width: "100%", justifyContent: 'center', alignItems: 'center'}}
         >
         <Text style={styles.text}>Stonks</Text>
         {/* <StatusBar style="auto" /> */}
-      </LinearGradient>
+      {/* </LinearGradient> */}
     </View>
   );
 }
