@@ -1,18 +1,19 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { View } from "react-native";
+import { View, Text } from "react-native";
+
+import SplashStyles from "./Styles"
+import AppStyles from "../../globals/styles/AppStyles";
 
 const SplashScreen = () => {
 
     return (
-        <View>
+        <View style={AppStyles.flexContainer}>
             <LinearGradient
                 colors={['#B401FC', '#E91EAC']}
                 locations={[0.65, 0.95]}
-                style={{ flex: 1, width: "100%", justifyContent: 'center', alignItems: 'center' }}
+                style={SplashStyles.container}
             >
-                <Text>STONKS</Text>
-
-                <Text>This is the text</Text>
+                <Text style={SplashStyles.text}>STONKS</Text>
             </LinearGradient>
         </View>
     );
