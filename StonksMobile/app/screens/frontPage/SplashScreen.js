@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { View, Text } from "react-native";
+import { View, Text, TextInput, Button } from "react-native";
 
 import CustomTextInput from "../../components/CustomTextInput";
 
@@ -15,10 +15,28 @@ const SplashScreen = () => {
                 locations={[0.65, 0.95]}
                 style={SplashStyles.container}
             >
-                <Text style={[SplashStyles.text, AppStyles.text]}>STONKS</Text>
+                <Text style={SplashStyles.text}>STONKS</Text>
+                <TextInput
+                    style={{ height: 40 }}
+                    placeholder="Username"
+                />
+
+                <TextInput
+                    style={{ height: 40 }}
+                    placeholder="Password"
+                />
+
+                <Text>Forgot username or password</Text>
+                <Button
+                    title="Submit"
+                    color="#54EF46"
+                    backgroundColor=""
+                    accessibilityLabel="Forgot Username or Password"
+                />
+
             </LinearGradient>
 
-            <CustomTextInput placeholderText="Username" styles={SplashStyles.textInput}/>
+            <CustomTextInput placeholderText="Username" styles={SplashStyles.textInput} />
             <CustomTextInput placeholderText="Password" />
         </View>
     );
