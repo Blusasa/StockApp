@@ -1,11 +1,11 @@
 import React from 'react';
 import { useEffect } from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
+import { View } from 'react-native';
 import { useFonts, Poppins_300Light_Italic, Poppins_400Regular } from '@expo-google-fonts/poppins';
 
-import SplashScreen from './app/screens/frontPage/SplashScreen';
 import AppStyles from './app/globals/styles/AppStyles';
+import Navigation from './app/navigation/Navigation';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -13,15 +13,13 @@ export default function App() {
     Poppins_400Regular,
   });
 
-  useEffect(() => {
-
-  }, [fontsLoaded]);
+  useEffect(() => {}, [fontsLoaded]);
 
   if (!fontsLoaded) return null;
 
   return (
     <View style={AppStyles.flexContainer}>
-      <SplashScreen/>
+      <Navigation/>
     </View>
   );
 }
