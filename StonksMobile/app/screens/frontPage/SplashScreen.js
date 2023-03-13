@@ -3,10 +3,11 @@ import { View, Text, TextInput, Button } from "react-native";
 
 import CustomTextInput from "../../components/CustomTextInput";
 
+
 import SplashStyles from "./Styles"
 import AppStyles from "../../globals/styles/AppStyles";
 
-const SplashScreen = () => {
+const SplashScreen = (props) => {
 
     return (
         <View style={AppStyles.flexContainer}>
@@ -28,16 +29,17 @@ const SplashScreen = () => {
 
                 <Text>Forgot username or password</Text>
                 <Button
-                    title="Submit"
+                    title="login"
                     color="#54EF46"
                     backgroundColor=""
                     accessibilityLabel="Forgot Username or Password"
+                    
+
+                    onPress={() => props.navigation.navigate('LoginScreen')}
                 />
 
             </LinearGradient>
 
-            <CustomTextInput placeholderText="Username" styles={SplashStyles.textInput} />
-            <CustomTextInput placeholderText="Password" />
         </View>
     );
 };
