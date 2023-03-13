@@ -7,9 +7,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     text: {
-        fontFamily: 'Poppins_400Regular',
         fontSize: '48px',
         color: '#ffffff',
+    },
+    textInput: {
+        backgroundColor: "black",
     }
 });
 
