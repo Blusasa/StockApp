@@ -1,4 +1,4 @@
-namespace StonksBackend.Infrastructure{
+namespace StonksBackend.Infrastructure.Clients{
 
     public class FinnHubClient{
 
