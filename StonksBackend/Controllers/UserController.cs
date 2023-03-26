@@ -1,6 +1,3 @@
-
-
-
 using Microsoft.AspNetCore.Mvc;
 using StonksBackend.Services;
 using StonksBackend.Domain.Entities;
@@ -11,14 +8,17 @@ public class UserController : ControllerBase
 {
     private UserService _userService;
 
-    public UserController(UserService _userService)
+    public UserController(UserService userService)
     {
-        this._userService = _userService;
+        _userService = new UserService();
     }
 
-    // [HttpPost]
-    // public async Task createUser(){
-    // //    await _userService.CreateUser(user);
-    // }
+    [HttpPost]
+    [Route("/newUser")]
+    public async Task<IActionResult> CreateNewUser([FromBody] User user){
+        await _userService.CreateUser(user);
+
+        return Ok();
+    }
 
 }
