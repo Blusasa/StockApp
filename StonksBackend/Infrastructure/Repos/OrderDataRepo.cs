@@ -6,17 +6,17 @@ namespace StonksBackend.Infrastructure.Repos{
     public class OrderDataRepo : IDataRepo<Order>
     {
 
-        public Task<Order> AddEntityAsync(Order entity)
+        public Task AddEntityAsync(Order entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Order> DeleteAsync(Order entity)
+        public Task DeleteAsync(Order entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Order> GetByIDAsync(string id)
+        public Task GetByIDAsync(string id)
         {
             throw new NotImplementedException();
         }
