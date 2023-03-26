@@ -1,26 +1,22 @@
 using StonksBackend.Domain;
 using StonksBackend.Domain.Entities;
 
-namespace StonksBackend.Infrastructure{
+namespace StonksBackend.Infrastructure.Repos{
 
     public class OrderDataRepo : IDataRepo<Order>
     {
-        public Task<Order> addAsync(Order entity)
+
+        public Task<Order> AddEntityAsync(Order entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Order> deleteAsync(Order entity)
+        public Task<Order> DeleteAsync(Order entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Order> getByIDAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Order> updateAsync(Order entity)
+        public Task<Order> GetByIDAsync(string id)
         {
             throw new NotImplementedException();
         }
