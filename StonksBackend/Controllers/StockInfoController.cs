@@ -1,4 +1,4 @@
-using StonksBackend.Infrastructure;
+using StonksBackend.Infrastructure.Clients;
 
 using Microsoft.AspNetCore.Mvc;
 using StonksBackend.Domain.Entities;
