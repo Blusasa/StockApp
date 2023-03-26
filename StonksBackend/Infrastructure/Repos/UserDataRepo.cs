@@ -18,9 +18,10 @@ namespace StonksBackend.Infrastructure.Repos {
             throw new NotImplementedException();
         }
 
-        public Task<User> AddEntityAsync(User entity)
+        public async Task AddEntityAsync(User entity)
         {
-            throw new NotImplementedException();
+            _dbClient.Set(_collectionName);
+            await _dbClient.CreateRecord<User>(entity);
         }
 
         public Task<User> DeleteAsync(User entity)
