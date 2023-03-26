@@ -1,8 +1,12 @@
 
 
 namespace StonksBackend.Domain.DataClients{
-    public interface IDataBaseClient{
+    public interface IDatabaseClient{
 
-            public Task WriteToDocumentAsync<T>(T entity);
+            public Task CreateRecord<T>(T entity);
+
+            public Task UpdateRecord<T>(T entity);
+
+            public void Set<T>();
     }
 }
