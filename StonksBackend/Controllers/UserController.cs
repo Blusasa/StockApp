@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
-using StonksBackend.Services;
+using StonksBackend.Application.Services.Contracts;
 using StonksBackend.Domain.Entities;
 
 [ApiController]
 [Route("[user]")]
 public class UserController : ControllerBase
 {
-    private UserService _userService;
+    private IUserService _userService;
 
-    public UserController(UserService userService)
+    public UserController(IUserService userService)
     {
-        _userService = new UserService();
+        _userService = userService;
     }
 
     [HttpPost]
