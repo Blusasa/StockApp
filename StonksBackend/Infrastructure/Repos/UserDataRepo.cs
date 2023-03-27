@@ -1,6 +1,6 @@
 using StonksBackend.Domain.Entities;
-using StonksBackend.Domain.DataClients;
-using StonksBackend.Domain.DataStores;
+using StonksBackend.Domain.Interfaces.Repositories;
+using StonksBackend.Domain.Interfaces.Clients;
 
 namespace StonksBackend.Infrastructure.Repos {
 
@@ -14,7 +14,7 @@ namespace StonksBackend.Infrastructure.Repos {
             _dbClient = client;
         }
 
-        public Task<User> GetByIDAsync(string id){
+        public Task GetByIDAsync(string id){
             throw new NotImplementedException();
         }
 
@@ -24,7 +24,7 @@ namespace StonksBackend.Infrastructure.Repos {
             await _dbClient.CreateRecord<User>(entity);
         }
 
-        public Task<User> DeleteAsync(User entity)
+        public Task DeleteAsync(User entity)
         {
             throw new NotImplementedException();
         }

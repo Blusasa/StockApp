@@ -1,5 +1,5 @@
 
-namespace StonksBackend.Domain
+namespace StonksBackend.Domain.Interfaces.Repositories
 {
     public interface IDataRepo<T>
     {

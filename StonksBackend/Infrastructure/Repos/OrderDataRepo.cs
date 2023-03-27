@@ -1,4 +1,4 @@
-using StonksBackend.Domain;
+using StonksBackend.Domain.Interfaces.Repositories;
 using StonksBackend.Domain.Entities;
 
 namespace StonksBackend.Infrastructure.Repos{

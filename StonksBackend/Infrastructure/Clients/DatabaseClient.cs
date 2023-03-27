@@ -1,9 +1,7 @@
-using StonksBackend.Domain.DataClients;
+using StonksBackend.Domain.Interfaces.Clients;
 
 using MongoDB.Driver;
 using MongoDB.Bson;
-
-using Microsoft.Extensions.Configuration;
 
 namespace StonksBackend.Infrastructure.Clients{
     public class DatabaseClient : IDatabaseClient{
