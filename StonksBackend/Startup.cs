@@ -1,9 +1,10 @@
-using StonksBackend.Domain;
 using StonksBackend.Domain.Entities;
-using StonksBackend.Domain.DataClients;
+using StonksBackend.Domain.Interfaces.Clients;
+using StonksBackend.Domain.Interfaces.Repositories;
 using StonksBackend.Infrastructure.Clients;
 using StonksBackend.Infrastructure.Repos;
-using StonksBackend.Services;
+using StonksBackend.Application.Services.Contracts;
+using StonksBackend.Application.Services.Impls;
 
 namespace StonksBackend
 {
@@ -24,9 +25,11 @@ namespace StonksBackend
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
-            services.AddScoped<IDataRepo<User>, UserDataRepo>();
+            services.AddScoped<IUserRepo, UserDataRepo>();
             services.AddScoped<IDataRepo<Order>, OrderDataRepo>();
             services.AddScoped<IDatabaseClient, DatabaseClient>();
+
+            services.AddScoped<IUserService, UserService>();
             
             services.AddSingleton<IConfiguration>(_config);
         }
