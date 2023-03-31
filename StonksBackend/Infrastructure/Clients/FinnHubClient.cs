@@ -1,26 +1,27 @@
+using StonksBackend.Domain.Interfaces.Clients;
+
 namespace StonksBackend.Infrastructure.Clients{
 
-    public class FinnHubClient{
+    public class FinnHubClient: IMarketClient{
 
         private readonly HttpClient _httpClient;
-        private const String _baseURL = "https://finnhub.io/api/v1";
-        private const String _tokenParam = "&token=cfjc9epr01que34nu720cfjc9epr01que34nu72g";
-        private const String _stockQuote = "/stock/candle?symbol=AAPL";
+        private const string BaseUrl = "https://finnhub.io/api/v1";
+        private const string TokenParam = "&token=cfjc9epr01que34nu720cfjc9epr01que34nu72g";
+        private const string StockQuote = "/stock/candle?symbol=AAPL";
 
         public FinnHubClient(){
             _httpClient = new HttpClient();
         }
 
-        public async Task<String> getStockInformation(String stock){
-            String fullPath = $"{_baseURL}{_stockQuote}&resolution=60&from={getUnixTime30DaysAgo()}&to={getUnixTimeNow()}{_tokenParam}";
+        public async Task<string> GetStockCandleDataAsync(String stock){
+            var fullPath = $"{BaseUrl}{StockQuote}&resolution=60&from={getUnixTime30DaysAgo()}&to={getUnixTimeNow()}{TokenParam}";
 
-            HttpResponseMessage response = await _httpClient.GetAsync(fullPath);
-
-            if(!response.IsSuccessStatusCode){
-                throw new ArgumentException("The stock: " + stock + ", could not be found");
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetAsync(fullPath);
+                response.EnsureSuccessStatusCode();
+                return await response.Content.ReadAsStringAsync();
             }
-
-            return await response.Content.ReadAsStringAsync();  
         }
 
         private int getUnixTimeNow(){
