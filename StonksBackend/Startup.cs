@@ -27,13 +27,19 @@ namespace StonksBackend
             services.AddSwaggerGen();
             
             ConfigureCors(services);
-
+           
+            //setup Client injections
+            services.AddScoped<IMarketClient, FinnHubClient>();
+            services.AddScoped<IDatabaseClient, DatabaseClient>();
+            
+            //setup data store injections
             services.AddScoped<IUserRepo, UserDataRepo>();
             services.AddScoped<IDataRepo<Order>, OrderDataRepo>();
-            services.AddScoped<IDatabaseClient, DatabaseClient>();
-
+            
+            //setup service injections
+            services.AddScoped<IStockService, StockService>();
             services.AddScoped<IUserService, UserService>();
-
+            
             services.AddSingleton<IConfiguration>(_config);
         }
 
