@@ -25,7 +25,6 @@ web-build/
 *.userosscache
 *.sln.docstates
 
-.vscode
 .idea
 
 # User-specific files (MonoDevelop/Xamarin Studio)
