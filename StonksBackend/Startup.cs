@@ -12,6 +12,7 @@ namespace StonksBackend
     {
 
         private readonly IConfiguration _config;
+        private const string _corsPolicy = "AllowAll";
 
         public Startup(IConfiguration configuration)
         {
@@ -20,18 +21,33 @@ namespace StonksBackend
 
         public void ConfigureServices(IServiceCollection services)
         {
-
+            
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            
+            ConfigureCors(services);
 
             services.AddScoped<IUserRepo, UserDataRepo>();
             services.AddScoped<IDataRepo<Order>, OrderDataRepo>();
             services.AddScoped<IDatabaseClient, DatabaseClient>();
 
             services.AddScoped<IUserService, UserService>();
-            
+
             services.AddSingleton<IConfiguration>(_config);
+        }
+
+        private void ConfigureCors(IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: _corsPolicy, policy =>
+                {
+                    policy.WithOrigins("http://localhost:19006")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment environment)
@@ -44,10 +60,18 @@ namespace StonksBackend
 
             app.UseHttpsRedirection();
 
+            app.UseRouting();
+
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
-            app.MapControllers();
-        }
+            app.UseCors(_corsPolicy);
 
+            app.UseEndpoints(endpoints =>
+            {
+                app.MapControllers();
+            });
+        }
     }
 }
