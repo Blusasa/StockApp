@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SplashScreen from '../screens/frontPage/SplashScreen';
 import HomePage from '../screens/frontPage/HomePage';
 import CreateAccount from '../screens/frontPage/CreateAccount';
-import FirstPage from '../screens/frontPage/FirstPage';
+import LoginScreen from '../screens/frontPage/LoginScreen';
 import Groups from '../screens/frontPage/Groups';
 import Profile from '../screens/frontPage/Profile';
 const Tab = createBottomTabNavigator();
@@ -20,7 +20,7 @@ const Tabs= ()=> {
             <Tab.Screen name= "Splash" component={SplashScreen}/>
             <Tab.Screen name ="HomePage" component={HomePage}/>
             <Tab.Screen name ="Create Account" component={CreateAccount}/>
-            <Tab.Screen name ="First Page" component={FirstPage}/>
+            <Tab.Screen name ="Login" component={LoginScreen}/>
             <Tab.Screen name ="Groups" component={Groups}/>
             <Tab.Screen name ="Profile" component={Profile}/>
         </Tab.Navigator>
