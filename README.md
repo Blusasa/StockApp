@@ -7,5 +7,7 @@ An educational "gamified" app built around learning the stock market by using vi
 ---
 ### Developers
 *Michael Conner*
-"Abdullahi Munye"
+
+
+,*Abdullahi Munye*
 
