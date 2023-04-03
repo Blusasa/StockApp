@@ -9,5 +9,5 @@ An educational "gamified" app built around learning the stock market by using vi
 *Michael Conner*
 
 
-,*Abdullahi Munye*
+*Abdullahi Munye*
 
