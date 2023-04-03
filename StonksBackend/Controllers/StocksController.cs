@@ -9,7 +9,7 @@ using StonksBackend.Infrastructure.Clients;
 namespace StonksBackend.Controllers{
     
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/stocks")]
     [Produces("application/json")]
     public class StocksController : ControllerBase
     {
@@ -29,9 +29,18 @@ namespace StonksBackend.Controllers{
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Stock>> GetStockCandleAsync([FromQuery] string symbol)
+        public async Task<ActionResult> GetStockCandleAsync([FromQuery] string symbol)
         {
-            return await _stockService.GetStockCandleData(symbol);
+            Stock stock = await _stockService.GetStockCandleData(symbol);
+            return Ok(stock);
+        }
+        
+        [HttpGet]
+        [Route("/quote")]
+        public async Task<IActionResult> GetStockQuote([FromQuery] string symbol)
+        {
+            Stock stock = await _stockService.GetStockQuote(symbol);
+            return Ok(stock);
         }
     }
 }

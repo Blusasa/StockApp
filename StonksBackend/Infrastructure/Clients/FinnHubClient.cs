@@ -12,7 +12,7 @@ namespace StonksBackend.Infrastructure.Clients{
         private const string SymbolsOnExchange = "/stock/symbol?exchange=US&mic=XNYS";
 
         private async Task<string> GetResponse(String fullUrl){
-            var fullPath = $"{BaseUrl}{StockCandle}AAPL&resolution=D&from={getUnixTimeDaysFromNow(-30)}&to={getUnixTimeNow()}{TokenParam}";
+            // var fullPath = $"{BaseUrl}{StockCandle}AAPL&resolution=D&from={getUnixTimeDaysFromNow(-30)}&to={getUnixTimeNow()}{TokenParam}";
 
             using (var client = new HttpClient())
             {
