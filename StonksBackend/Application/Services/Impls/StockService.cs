@@ -18,7 +18,7 @@ public class StockService : IStockService
 
     public async Task<Stock> GetStockCandleData(string symbol)
     {
-        string stockJson = await _marketClient.GetStockCandles1DAsync("AAPL");
+        string stockJson = await _marketClient.GetStockCandles1DAsync(symbol);
         var jsonObject = JsonSerializer.Deserialize<JsonElement>(stockJson);
 
         var candleData = new List<CandleData>();
@@ -47,6 +47,36 @@ public class StockService : IStockService
             Quote = new Quote()
         };
         
+        return stock;
+    }
+
+    public async Task<Stock> GetStockQuote(string symbol)
+    {
+        symbol = symbol.ToUpper();
+
+        string stockJSON = await _marketClient.GetStockQuoteAsync(symbol);
+        var jsonObject = JsonSerializer.Deserialize<JsonElement>(stockJSON);
+
+        JsonElement currentPrice = jsonObject.GetProperty("c");
+        JsonElement priceChange = jsonObject.GetProperty("d");
+        JsonElement percentChange = jsonObject.GetProperty("dp");
+        JsonElement highPrice = jsonObject.GetProperty("h");
+        JsonElement lowPrice = jsonObject.GetProperty("o");
+        JsonElement previousClose = jsonObject.GetProperty("pc");
+
+        Quote quote = new Quote
+        {
+            CurrentPrice = currentPrice.GetDouble(),
+            PriceChange = priceChange.GetDouble(),
+            HighPrice = highPrice.GetDouble(),
+            PercentChange = percentChange.GetDouble(),
+            LowPrice = lowPrice.GetDouble(),
+            PreviousClose = previousClose.GetDouble()
+        };
+
+        Stock stock = new Stock();
+        stock.Quote = quote;
+
         return stock;
     }
 
