@@ -5,7 +5,7 @@ namespace StonksBackend.Domain.Interfaces.Repositories
     {
 
         Task GetByIDAsync(String id);
-        Task AddEntityAsync(T entity);
+        Task<T> AddEntityAsync(T entity);
         Task DeleteAsync(T entity);
 
     }
