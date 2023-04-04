@@ -2,10 +2,10 @@ namespace StonksBackend.Domain.Entities.Stocks;
 
 public class Stock
 {
-    public string CompanyName { get; set;  }
-    public string Symbol { get; set; }
+    public Quote Quote { get; set; }
+    // public Dictionary<string, CandleData> CandleDatas { get;  }
+    
     public List<CandleData> CandleData { get; set; }
-
     public Stock()
     {
         //no args for automapping

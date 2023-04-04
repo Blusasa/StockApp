@@ -1,15 +1,16 @@
 
 namespace StonksBackend.Domain.Entities {
     public class User {
-        public int _userID  { get; set; }
-        public string _email  { get; set;}
-        private string _sessionID { get; set;}
-        public string _username { get; set; }
-        public string _password { get; set;}
-        // private Assets? _assets { get; set; }
-        public int _balance { get; set; }
+        public int UserID  { get; set; }
+        private string SessionID { get; set;}
+        public string Username { get; set; }
+        public string Password { get; set;}
+        public string Email  { get; set;}
+        public int Balance { get; set; }
+        public IEnumerable<Order> Orders { get; set; }
 
         //no-args Constructor for BSON automapping
         public User(){}
+
     }
 }
