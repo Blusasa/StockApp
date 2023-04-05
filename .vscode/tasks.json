@@ -1,0 +1,85 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Project",
+            "dependsOn": [
+                "Backend run",
+                "Start mobile"
+            ],
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "Start mobile",
+            "type": "shell",
+            "command": "npx expo start --web",
+            "options": {
+                "cwd": "${workspaceFolder}/stonksmobile"
+            },
+            "problemMatcher": {
+                "owner": "javascript",
+                "pattern": {
+                    "regexp": "^(.*)$",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^Starting Metro Bundler on port",
+                    "endsPattern": "^Metro Bundler ready."
+                }
+            }
+        },
+        {
+            "label": "Backend run",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "run"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/StonksBackend"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/StonksBackend/StonksBackend.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/StonksBackend/StonksBackend.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/StonksBackend/StonksBackend.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
