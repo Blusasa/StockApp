@@ -6,6 +6,7 @@ import { useFonts, Poppins_300Light_Italic, Poppins_400Regular } from '@expo-goo
 
 import AppStyles from './app/globals/styles/AppStyles';
 import Navigation from './app/navigation/Navigation';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,6 +21,7 @@ export default function App() {
   return (
     <View style={AppStyles.flexContainer}>
       <Navigation/>
+     
     </View>
   );
 }
