@@ -3,6 +3,11 @@
 public class StockBuilder
 {
     private Stock _stock;
+    private const string Hour = "1H";
+    private const string Day = "1D";
+    private const string Week = "1W";
+    private const string Month = "1M";
+    private const string Year = "1Y";
 
     public StockBuilder()
     {
@@ -28,33 +33,53 @@ public class StockBuilder
         return this;
     }
 
-    public StockBuilder Add1HCandle(CandleData hrCandle)
+    private void checkCandleDictNull()
     {
-        _stock.CandleDatas.Add("1H", hrCandle);
+        if (_stock.CandleDatas == null) _stock.CandleDatas = new Dictionary<string, IEnumerable<CandleData>>();
+    }
+
+    private void clearDupeKeys(string key)
+    {
+        if (_stock.CandleDatas.ContainsKey(key)) _stock.CandleDatas.Remove(key);
+    }
+
+    public StockBuilder Add1HCandle(IEnumerable<CandleData> hrCandles)
+    {
+        checkCandleDictNull();
+        clearDupeKeys(Hour);
+        _stock.CandleDatas.Add(Hour, hrCandles);
         return this;
     }
     
-    public StockBuilder Add1DCandle(CandleData dayCandle)
+    public StockBuilder Add1DCandle(IEnumerable<CandleData> dayCandles)
     {
-        _stock.CandleDatas.Add("1D", dayCandle);
+        checkCandleDictNull();
+        clearDupeKeys(Day);
+        _stock.CandleDatas.Add(Day, dayCandles);
         return this;
     }
 
-    public StockBuilder Add1WCandle(CandleData wkCandle)
+    public StockBuilder Add1WCandle(IEnumerable<CandleData> wkCandles)
     {
-        _stock.CandleDatas.Add("1W", wkCandle);
+        checkCandleDictNull();
+        clearDupeKeys(Week);
+        _stock.CandleDatas.Add(Week, wkCandles);
         return this;
     }
 
-    public StockBuilder Add1MCandle(CandleData monthCandle)
+    public StockBuilder Add1MCandle(IEnumerable<CandleData> monthCandles)
     {
-        _stock.CandleDatas.Add("1M", monthCandle);
+        checkCandleDictNull();
+        clearDupeKeys(Month);
+        _stock.CandleDatas.Add(Month, monthCandles);
         return this;
     }
     
-    public StockBuilder Add1YCandle(CandleData yrCandle)
+    public StockBuilder Add1YCandle(IEnumerable<CandleData> yrCandles)
     {
-        _stock.CandleDatas.Add("1Y", yrCandle);
+        checkCandleDictNull();
+        clearDupeKeys(Year);
+        _stock.CandleDatas.Add(Year, yrCandles);
         return this;
     }
 
