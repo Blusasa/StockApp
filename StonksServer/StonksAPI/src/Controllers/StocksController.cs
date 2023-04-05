@@ -1,12 +1,8 @@
-using System.Net;
-using StonksBackend.Infrastructure.Clients;
-
 using Microsoft.AspNetCore.Mvc;
-using StonksBackend.Application.Services.Contracts;
-using StonksBackend.Domain.Entities.Stocks;
-using StonksBackend.Infrastructure.Clients;
+using StonksAPI.Application.Services.Contracts;
+using StonksAPI.Domain.Entities.Stocks;
 
-namespace StonksBackend.Controllers{
+namespace StonksAPI.Controllers{
     
     [ApiController]
     [Route("api/stocks")]

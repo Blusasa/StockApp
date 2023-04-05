@@ -1,6 +1,6 @@
-using StonksBackend.Domain.Entities;
+using StonksAPI.Domain.Entities;
 
-namespace StonksBackend.Domain.Interfaces.Repositories{
+namespace StonksAPI.Domain.Interfaces.Repositories{
 
     public interface IUserRepo : IDataRepo<User>
     {

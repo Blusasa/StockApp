@@ -1,8 +1,6 @@
 
 
-using StonksBackend.Services.DTOs;
-
-namespace StonksBackend.Domain.Entities {
+namespace StonksAPI.Domain.Entities {
     public class Group {
         
         public string _id { get; set; }

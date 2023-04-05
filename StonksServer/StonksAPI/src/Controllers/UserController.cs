@@ -1,8 +1,9 @@
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using StonksBackend.Application.Services.Contracts;
-using StonksBackend.Domain.Entities;
-using StonksBackend.Services.DTOs;
+using StonksAPI.Application.DTOs;
+using StonksAPI.Application.Services.Contracts;
+using StonksAPI.Domain.Entities;
+
+namespace StonksAPI.Controllers;
 
 [ApiController]
 [Route("/user")]

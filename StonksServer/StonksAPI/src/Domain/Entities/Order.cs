@@ -1,7 +1,7 @@
 
-using StonksBackend.Domain.Entities.Stocks;
+using StonksAPI.Domain.Entities.Stocks;
 
-namespace StonksBackend.Domain.Entities{
+namespace StonksAPI.Domain.Entities{
     public class Order {
         
         public DateTime TimeStamp { get; set; }

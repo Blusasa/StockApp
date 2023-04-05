@@ -1,14 +1,14 @@
-using StonksBackend.CustomJSONFormatters;
+using System.Text.Json.Serialization;
+using StonksAPI.Application.Services.Contracts;
+using StonksAPI.Application.Services.Impls;
+using StonksAPI.CustomJSONFormatters;
+using StonksAPI.Domain.Interfaces.Clients;
+using StonksAPI.Domain.Interfaces.Repositories;
+using StonksAPI.Infrastructure.Clients;
+using StonksAPI.Infrastructure.Clients.Market;
+using StonksAPI.Infrastructure.Repos;
 
-using StonksBackend.Domain.Entities;
-using StonksBackend.Domain.Interfaces.Clients;
-using StonksBackend.Domain.Interfaces.Repositories;
-using StonksBackend.Infrastructure.Clients;
-using StonksBackend.Infrastructure.Repos;
-using StonksBackend.Application.Services.Contracts;
-using StonksBackend.Application.Services.Impls;
-
-namespace StonksBackend
+namespace StonksAPI
 {
     public class Startup
     {
@@ -28,6 +28,7 @@ namespace StonksBackend
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(new DateTimeJson());
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 });
 
             services.AddEndpointsApiExplorer();
@@ -46,6 +47,7 @@ namespace StonksBackend
             
             //setup data store injections
             services.AddScoped<IUserRepo, UserDataRepo>();
+            services.AddScoped<IStockRepo, StockRepo>();
 
             //setup service injections
             services.AddScoped<IStockService, StockService>();

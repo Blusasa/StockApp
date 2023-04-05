@@ -1,8 +1,8 @@
-using StonksBackend.Domain.Entities;
-using StonksBackend.Domain.Interfaces.Repositories;
-using StonksBackend.Domain.Interfaces.Clients;
+using StonksAPI.Domain.Entities;
+using StonksAPI.Domain.Interfaces.Clients;
+using StonksAPI.Domain.Interfaces.Repositories;
 
-namespace StonksBackend.Infrastructure.Repos {
+namespace StonksAPI.Infrastructure.Repos {
 
     public class UserDataRepo : IUserRepo
     {

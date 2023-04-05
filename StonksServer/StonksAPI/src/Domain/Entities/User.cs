@@ -1,5 +1,5 @@
 
-namespace StonksBackend.Domain.Entities {
+namespace StonksAPI.Domain.Entities {
     public class User {
         public int UserID  { get; set; }
         private string SessionID { get; set;}

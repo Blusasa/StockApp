@@ -1,4 +1,4 @@
-﻿namespace StonksBackend.Domain.Entities.Stocks;
+﻿namespace StonksAPI.Domain.Entities.Stocks;
 
 public class Quote
 {
@@ -8,5 +8,6 @@ public class Quote
     public double HighPrice { get; set; }
     public double LowPrice { get; set; }
     public double PreviousClose { get; set; }
-    public DateTime timeStamp { get; set; }
+    
+    public DateTime TimeStamp { get; set; }
 }

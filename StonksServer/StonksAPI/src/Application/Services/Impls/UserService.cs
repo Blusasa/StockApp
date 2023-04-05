@@ -1,12 +1,11 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using StonksBackend.Domain.Entities;
-using StonksBackend.Domain.Interfaces.Repositories;
-using StonksBackend.Application.Services.Contracts;
-using StonksBackend.Services.DTOs;
+using StonksAPI.Application.DTOs;
+using StonksAPI.Application.Services.Contracts;
+using StonksAPI.Domain.Entities;
+using StonksAPI.Domain.Interfaces.Repositories;
 
-namespace StonksBackend.Application.Services.Impls
+namespace StonksAPI.Application.Services.Impls
 {
     public class UserService : IUserService{
 
@@ -29,6 +28,26 @@ namespace StonksBackend.Application.Services.Impls
         
         
         public Task Login(User user){
+            throw new NotImplementedException();
+        }
+
+        public Task AddOrderToUser(Order order)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task GetAssetsFromUser(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task GetUserBalance(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CalculateUserCandles(User user)
+        {
             throw new NotImplementedException();
         }
 

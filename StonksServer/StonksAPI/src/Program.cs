@@ -1,4 +1,4 @@
-using StonksBackend;
+using StonksAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 

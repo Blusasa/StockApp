@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace StonksBackend.Domain.Entities.Stocks;
+﻿namespace StonksAPI.Domain.Entities.Stocks;
 
 public class CandleData
 {

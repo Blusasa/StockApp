@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace StonksBackend.CustomJSONFormatters;
+namespace StonksAPI.CustomJSONFormatters;
 
 public class DateTimeJson : JsonConverter<DateTime>
 {

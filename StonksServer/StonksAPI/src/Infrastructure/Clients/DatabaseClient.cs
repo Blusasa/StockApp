@@ -1,9 +1,8 @@
-using StonksBackend.Domain.Interfaces.Clients;
-
-using MongoDB.Driver;
 using MongoDB.Bson;
+using MongoDB.Driver;
+using StonksAPI.Domain.Interfaces.Clients;
 
-namespace StonksBackend.Infrastructure.Clients{
+namespace StonksAPI.Infrastructure.Clients{
     public class DatabaseClient : IDatabaseClient{
         private MongoClient _mongoClient;
         private const string _dbName = "Stonks_Dev";
