@@ -1,43 +1,20 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
+using StonksAPI.Domain.Entities;
 using StonksAPI.Domain.Interfaces.Clients;
 
 namespace StonksAPI.Infrastructure.Clients{
     public class DatabaseClient : IDatabaseClient{
-        private MongoClient _mongoClient;
-        private const string _dbName = "Stonks_Dev";
-        private string? _currentCollection = null; 
+        private readonly MongoClient _mongoClient;
+        private const string DbName = "Stonks_Dev";
 
         public DatabaseClient(IConfiguration config){
             _mongoClient = new MongoClient(config.GetConnectionString("MongoDB"));
-            _currentCollection = "";
         }
 
-        public async Task CreateRecord<T>(T entity) where T: class
-        {
-            if(_currentCollection == null){
-                throw new Exception("Collection not set. Call Set(string collection) first");
-            }
+        public IMongoCollection<AppUser> Users => _mongoClient.GetDatabase(DbName).GetCollection<AppUser>("users");
 
-            var collection = getDatabase().GetCollection<BsonDocument>(_currentCollection);
-
-            BsonDocument entityDoc = BsonExtensionMethods.ToBsonDocument(entity);
-
-            await collection.InsertOneAsync(entityDoc);
-        }
-
-        public Task UpdateRecord<T>(T entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Set(string collection)
-        {
-            _currentCollection = collection;
-        }
-
-        private IMongoDatabase getDatabase(){
-            return _mongoClient.GetDatabase(_dbName);
-        }
+        public IMongoCollection<Group> Groups => _mongoClient.GetDatabase(DbName).GetCollection<Group>("groups");
+        
     }
 }
