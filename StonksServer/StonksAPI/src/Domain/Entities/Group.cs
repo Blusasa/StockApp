@@ -7,7 +7,7 @@ namespace StonksAPI.Domain.Entities {
         public string GroupName { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public IEnumerable<User> users { get; set; }
+        public IEnumerable<AppUser> users { get; set; }
 
     }
 }
