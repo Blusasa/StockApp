@@ -4,18 +4,19 @@ import api from "../../api/Api";
 import endpoints from "../../api/Endpoints";
 
 const StockBox = () => {
-    const [stockInfo, setStockInfo] = useState(null);
+    const [stockInfo, setStockInfo] = useState({});
 
     useEffect(() => {
-        api.get(endpoints.getStock)
+        api.get(endpoints.getQoute("msft"))
                         .then((res) => {
-                            console.log(res.data);
-                            setStockInfo(res.data);
+                            console.log(res.data.quote.quote);
+                            setStockInfo(res.data.quote);
                         }).catch((err) => {});
     }, []);
 
+    if(!stockInfo || !stockInfo.currentPrice) return null;
 
-    return(<View>{stockInfo && <Text>Apple Inc, AAPL, Price: ${stockInfo.c[0]}</Text>}</View>);
+    return(<View>{stockInfo.currentPrice}</View>);
 
 }
 
