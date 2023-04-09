@@ -9,6 +9,27 @@ const appStyles2 = StyleSheet.create({
         alignItems: 'center',
     },
 
+    flexContainer2:{
+      flex: 1,
+        width: "95%",
+        backgroundColor : "#808080",
+        justifyContent: "center",
+        alignItems: 'center',
+        
+    },
+
+    text2:{
+     
+       
+        borderColor: "#B401FC",
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+        color: "white",
+       
+    },
+
     bigBlue: {
         color: 'blue',
         fontWeight: 'bold',
@@ -25,6 +46,7 @@ const appStyles2 = StyleSheet.create({
       },
       text:{
         color:'white',
+        
        
       }
     
