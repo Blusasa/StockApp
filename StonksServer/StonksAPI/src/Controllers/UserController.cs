@@ -1,12 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StonksAPI.Application.DTOs;
 using StonksAPI.Application.Services.Contracts;
-using StonksAPI.Domain.Entities;
 
 namespace StonksAPI.Controllers;
 
 [ApiController]
-[Route("/user")]
+[Route("api/user")]
+[Authorize]
 public class UserController : ControllerBase
 {
     private IUserService _userService;
@@ -17,20 +19,41 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    [Route("/new-user")]
-    public async Task<IActionResult> CreateNewUser([FromBody] User user){
-        UserDTO insertedUser = await _userService.CreateUser(user);
-        return CreatedAtAction(null, insertedUser);
+    [Route("/register")]
+    [AllowAnonymous]
+    public async Task<IActionResult> CreateNewUser([FromBody] RegistrationDTO newUser)
+    {
+        var result = await _userService.CreateUser(newUser);
+        if (result.Succeeded)
+        {
+            return Ok();
+        }
+
+        var errors = result.Errors.Select(e => e.Description).ToList();
+        return BadRequest(errors);
     }
 
     [HttpPost("/login")]
-    public async Task<IActionResult> LogIn([FromBody] string username, string password)
-    {
-        throw new NotImplementedException();
+    [AllowAnonymous]
+    public async Task<IActionResult> LogIn([FromBody] LoginDTO login)
+    { 
+        string token = await _userService.Login(login);
+        if (token == null)
+        {
+            return BadRequest("Invalid credentials");
+        }
+
+        return Ok(token);
+
     }
-    
+
+    private string GenerateJwt()
+    {
+        return "";
+    }
+
     [HttpPut("/update")]
-    public async Task<IActionResult> UpdateUser([FromBody] User user)
+    public async Task<IActionResult> UpdateUser([FromBody] UserDTO user)
     {
         throw new NotImplementedException();
     }

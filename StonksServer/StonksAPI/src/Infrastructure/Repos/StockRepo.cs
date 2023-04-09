@@ -16,7 +16,13 @@ public class StockRepo : IStockRepo
 
     public async Task<Stock> GetStockWithCandles(string symbol)
     {
-        throw new NotImplementedException();
+        string json =
+            await _marketClient.GetStockCandleAsync(symbol, CandleResolution.Five, DateTime.Now,
+                DateTime.Now.AddDays(-1));
+
+        var candleData = ParseCandles(json);
+
+        return new StockBuilder().Add1DCandle(candleData).Build();
     }
 
     public async Task<Stock> GetStockWithQuote(string symbol)
@@ -67,6 +73,33 @@ public class StockRepo : IStockRepo
     {
         return await _marketClient.GetStockCandleAsync(symbol, CandleResolution.D,
             DateTimeUtils.GetPreviousFridayCloseFromNow(), DateTimeUtils.GetTodayAt8PM());
+    }
+
+    private IEnumerable<CandleData> ParseCandles(string json)
+    {
+        JsonElement jsonObj = JsonSerializer.Deserialize<JsonElement>(json);
+
+        JsonElement openPrice = jsonObj.GetProperty("o");
+        JsonElement closePrice = jsonObj.GetProperty("c");
+        JsonElement lowPrice = jsonObj.GetProperty("l");
+        JsonElement highPrice = jsonObj.GetProperty("h");
+        JsonElement timeStamp = jsonObj.GetProperty("t");
+        JsonElement volume = jsonObj.GetProperty("v");
+
+        var candleData = new List<CandleData>();
+        for (int i = 0; i < openPrice.GetArrayLength(); i++)
+        {
+            var data = new CandleData();
+            data.OpenPrice = openPrice[i].GetDouble();
+            data.ClosePrice = closePrice[i].GetDouble();
+            data.HighPrice = highPrice[i].GetDouble();
+            data.LowPrice = lowPrice[i].GetDouble();
+            data.VolumeTraded = volume[i].GetInt32();
+            data.TimeStamp = DateTimeUtils.UnixToDateTime(timeStamp[i].GetInt64());
+            candleData.Add(data);
+        }
+
+        return candleData;
     }
 
     private Quote ParseQuoteFromCandles(JsonElement json)
