@@ -19,12 +19,9 @@ const PricesComponent = () => {
     if (!quoteData) return null;
 
     return (
-        <View style={appStyles2.flexContainer2}>
-            
-                <Text style={appStyles2.text2}>Apple Current $: {quoteData.currentPrice}</Text>
-                <Text style={appStyles2.text}>Apple Current $: {quoteData.percentChange}</Text>
-           
-            
+        <View style={appStyles2.flexContainer}>
+
+            <Text style={appStyles2.text}>Apple Current $: {quoteData.currentPrice}</Text>
         </View>
     );
 };

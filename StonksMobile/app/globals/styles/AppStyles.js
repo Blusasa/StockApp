@@ -1,21 +1,29 @@
 import { StyleSheet } from "react-native";
 
-const appStyles = StyleSheet.create({
-    flexContainer: {
+const AppStyles = StyleSheet.create({
+    flexContainer : {
         flex: 1,
-        width: "100%"
+        justifyContent: "center",
+        alignItems: "center",
     },
-    text:{
-        fontFamily: "Poppins_400Regular"
+    text : {
+        fontFamily: "Poppins_400Regular",
+        alignSelf: "center",
+        justifySelf: "center",
+        color: "#ffffff"
     },
-    textInputBox: {
-        flex: 1,
-        margin: "5px",
-        color: "white",
-        backgroundColor: "transparent",
-        textAlign: "center",
-        fontFamily: "Poppins_400Regular"
-    }
+    textBold : {
+        fontFamily: "Poppins_700Bold",
+        alignSelf: "center",
+        justifySelf: "center",
+        color: "#ffffff"
+    },
+    textSemiBold: {
+        fontFamily: "Poppins_600SemiBold",
+        alignSelf: "center",
+        justifySelf: "center",
+        color: "#ffffff",
+    },
 });
 
-export default appStyles;
+export default AppStyles;

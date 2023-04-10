@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
     },
   });
   
-  export default BoxRow;
+  export default StockTickerComponent;
