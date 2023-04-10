@@ -1,9 +1,7 @@
 import { View, Text,TextInput } from "react-native";
 import appStyles2 from "../../globals/styles/AppStyles2";
-import CustomTextInput from "../../components/CustomTextInput";
 import PricesComponent from "./PricesComponent";
-import StockTickerComponent from "./StockTickerComponent"
-
+import CustomTextInput from "../../components/CustomTextInput";
 
 const HomeScreen = (props) => {
     return (
@@ -12,7 +10,6 @@ const HomeScreen = (props) => {
             <CustomTextInput placeholderText={"Search a Stock"} styles={{width: 300}}/>
         
             <PricesComponent/>
-            <StockTickerComponent/>
         </View>
     );
 };
