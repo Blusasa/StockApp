@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Pressable, Text, StyleSheet } from "react-native";
+import { Pressable, Text, StyleSheet, View } from "react-native";
+import AppStyles from "../globals/styles/AppStyles";
 
 const CustomBtn = ({ text, styles, onPress}) => {
 
@@ -10,18 +11,18 @@ const CustomBtn = ({ text, styles, onPress}) => {
 
     return (
         <Pressable
-            style={[isPressed ? btnPressed.btnPressed : btnStyl.button, styles]}
-            onPress={() => {}}
+            style={[isPressed ? btnPressed.btnPressed : btnStyle.button, styles]}
+            onPress={onPress}
             onPressIn={handlePressIn}
             onLongPress={handlePressIn}
             onPressOut={handlePressOut}
         >
-            <Text style={isPressed ? btnPressed.btnTextPressed : btnStyl.btnText}>{text}</Text>
+            <Text style={[AppStyles.textSemiBold, isPressed ? btnPressed.btnTextPressed : btnStyle.btnText]}>{text}</Text>
         </Pressable>
     );
 };
 
-const btnStyl = StyleSheet.create({
+const btnStyle = StyleSheet.create({
     button: {
         height: 50,
         margin: 5,
@@ -32,17 +33,23 @@ const btnStyl = StyleSheet.create({
         backgroundColor: "#54EF46",
         borderWidth: 2,
         borderStyle: "solid",
-        borderColor: "black"
+        borderColor: "black",
+        shadowColor: "#000000",
+        shadowOffset: {width: 0, height: 4},
+        elevation: 5
     },
     btnText: {
-        fontFamily: "Poppins_600SemiBold",
+        color: "#000000",
         fontSize: 20
+    },
+    shadowComponent : {
+        backgroundColor: "transparent",
     }
 });
 
 const btnPressed = StyleSheet.create({
     btnPressed: {
-        ...btnStyl.button,
+        ...btnStyle.button,
         backgroundColor: "#2A7D23",
         shadowColor: "grey",
         shadowOffset: { width: 5, height: 5},
@@ -53,7 +60,7 @@ const btnPressed = StyleSheet.create({
         borderWidth: 2
     },
     btnTextPressed: {
-        ...btnStyl.btnText,
+        ...btnStyle.btnText,
         color: "white"
     }
 })
