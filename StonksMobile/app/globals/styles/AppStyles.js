@@ -1,19 +1,29 @@
 import { StyleSheet } from "react-native";
 
-const appStyles = StyleSheet.create({
-    flexContainer: {
-        flex: 1
+const AppStyles = StyleSheet.create({
+    flexContainer : {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
     },
-    text:{
+    text : {
         fontFamily: "Poppins_400Regular",
-        color: "white",
         alignSelf: "center",
-        justifySelf: "center"
+        justifySelf: "center",
+        color: "#ffffff"
     },
-    buttons: {
-        borderRadius: 25,
-        backgroundColor: "#54EF46"
-    }
+    textBold : {
+        fontFamily: "Poppins_700Bold",
+        alignSelf: "center",
+        justifySelf: "center",
+        color: "#ffffff"
+    },
+    textSemiBold: {
+        fontFamily: "Poppins_600SemiBold",
+        alignSelf: "center",
+        justifySelf: "center",
+        color: "#ffffff",
+    },
 });
 
-export default appStyles;
+export default AppStyles;
