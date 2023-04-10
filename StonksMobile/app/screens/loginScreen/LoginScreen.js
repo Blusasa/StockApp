@@ -1,7 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { View, Text } from "react-native";
 
-import SplashStyles from "../frontPage/Styles"
+import FrontPageStyles from "../frontPage/FrontPageStyles"
 import AppStyles from "../../globals/styles/AppStyles";
 import LoginStyles from "./LoginStyles";
 import CustomTextInput from "../../components/CustomTextInput";
@@ -18,7 +18,7 @@ const LoginScreen = ({ navigation }) => {
             style={LoginStyles.componentContainer}>
             
             <View style={{flex: 1, alignItems:"center"}}></View>
-            <Text style={[SplashStyles.text]}>STONKS</Text>
+            <Text style={[FrontPageStyles.text, AppStyles.textSemiBold]}>STONKS</Text>
             <View style={{flex: 1, alignItems:"center"}}></View>
             <View style={[LoginStyles.infoContainer]}>
                 <CustomTextInput placeholderText="Username" styles={{ width: 350 }} hideGradient={true}></CustomTextInput>

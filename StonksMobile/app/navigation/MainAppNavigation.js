@@ -1,8 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import SplashScreen from "../screens/frontPage/SplashScreen";
-import CreateAccount from "../screens/frontPage/CreateAccount";
+import FrontPage from "../screens/frontPage/FrontPage";
+import CreateAccount from "../screens/createAccountPage/CreateAccount";
 import LoginScreen from "../screens/loginScreen/LoginScreen";
 import Tabs from "./TabNavigator";
 
@@ -14,14 +14,13 @@ function Navigation() {
         "headerShown": false
     }
 
-
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator initialRouteName="FrontPage">
                 <Stack.Screen name="LoginScreen" component={LoginScreen} options={screenOptions}/>
-                <Stack.Screen name="CreateAcoount" component={CreateAccount} />
-                <Stack.Screen name="LaunchScreen" component={SplashScreen} />
-                <Stack.Screen name="MainAppPage" component={Tabs} />
+                <Stack.Screen name="CreateAccount" component={CreateAccount} options={screenOptions}/>
+                <Stack.Screen name="FrontPage" component={FrontPage} options={screenOptions}/>
+                <Stack.Screen name="MainAppPages" component={Tabs} options={screenOptions}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
