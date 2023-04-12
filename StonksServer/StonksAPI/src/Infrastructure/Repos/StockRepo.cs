@@ -17,8 +17,8 @@ public class StockRepo : IStockRepo
     public async Task<Stock> GetStockWithCandles(string symbol)
     {
         string json =
-            await _marketClient.GetStockCandleAsync(symbol, CandleResolution.Five, DateTime.Now,
-                DateTime.Now.AddDays(-1));
+            await _marketClient.GetStockCandleAsync(symbol, CandleResolution.Five, DateTime.Now.AddDays(-1),
+                DateTime.Now);
 
         var candleData = ParseCandles(json);
 
@@ -45,19 +45,19 @@ public class StockRepo : IStockRepo
         bool isWeekend = (DateTime.Today.DayOfWeek == DayOfWeek.Saturday ||
                           DateTime.Today.DayOfWeek == DayOfWeek.Sunday);
 
-        if (requiresLastFridayCandles)
-        {
-            json = await GetQuoteFromMonday(symbol); 
-            quote = ParseQuoteFromCandles(JsonSerializer.Deserialize<JsonElement>(json));
-        } else if (isWeekend)
-        {
-            json = await GetQuoteFromWeekend(symbol);
-            quote = ParseQuoteFromCandles(JsonSerializer.Deserialize<JsonElement>(json));
-        } else
-        {
+        // if (requiresLastFridayCandles)
+        // {
+        //     json = await GetQuoteFromMonday(symbol); 
+        //     quote = ParseQuoteFromCandles(JsonSerializer.Deserialize<JsonElement>(json));
+        // } else if (isWeekend)
+        // {
+        //     json = await GetQuoteFromWeekend(symbol);
+        //     quote = ParseQuoteFromCandles(JsonSerializer.Deserialize<JsonElement>(json));
+        // } else
+        // {
             json = await _marketClient.GetStockQuoteAsync(symbol);
             quote = ParseQuote(JsonSerializer.Deserialize<JsonElement>(json));
-        }
+        // }
 
         Stock stock = new StockBuilder().AddQuote(quote).Build();
         return stock;

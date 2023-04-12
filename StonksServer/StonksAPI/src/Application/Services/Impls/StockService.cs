@@ -15,7 +15,7 @@ public class StockService : IStockService
     
     public async Task<Stock> GetStockCandleData(string symbol)
     {
-        throw new NotImplementedException();
+        return await _stockRepo.GetStockWithCandles(symbol);
     }
 
     public async Task<Stock> GetStockQuote(string symbol)
