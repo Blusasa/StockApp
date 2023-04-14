@@ -6,6 +6,7 @@ import HomeScreen from '../screens/homePage/HomeScreen';
 
 import Ionicons from '../assets/rneIcons/Ionicons';
 import UserAssets from '../screens/userAssetsPage/UserAssets';
+import SingleStockPage from '../screens/individualStockPage/SingleStockPage';
 
 const Tab = createBottomTabNavigator();
 
@@ -59,6 +60,7 @@ const Tabs = () => {
             <Tab.Screen name="Assets" component={UserAssets}/>
             <Tab.Screen name="Groups" component={Groups} />
             <Tab.Screen name="Profile" component={Profile} />
+            <Tab.Screen name="Stock" component={SingleStockPage}/>
         </Tab.Navigator>
 
     );
