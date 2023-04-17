@@ -1,10 +1,11 @@
 import { View, Text, TextInput, Button } from "react-native";
 import appStyles2 from "../../globals/styles/AppStyles2";
+import AppStyles from "../../globals/styles/AppStyles";
 
 const Profile = () => {
     return (
-        <View style={appStyles2.flexContainer}>
-            <Text style={appStyles2.text}>My Profile</Text>
+        <View style={[AppStyles.flexContainer, AppStyles.mainApp]}>
+            <Text style={AppStyles.textSemiBold}>My Profile</Text>
         </View>
 
     );

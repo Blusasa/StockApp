@@ -6,6 +6,9 @@ const AppStyles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    mainApp : {
+        backgroundColor: "#000000"
+    },
     text : {
         fontFamily: "Poppins_400Regular",
         alignSelf: "center",

@@ -70,3 +70,4 @@ const appStyles2 = StyleSheet.create({
 });
 
 export default appStyles2;
+
