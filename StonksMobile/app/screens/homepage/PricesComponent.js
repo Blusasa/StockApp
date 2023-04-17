@@ -3,17 +3,19 @@ import { View, Text } from "react-native";
 import appStyles2 from "../../globals/styles/AppStyles2";
 import api from "../../api/Api";
 import endpoints from "../../api/Endpoints";
+import StockBox from "../../components/stockbox/StockBox"
 
 const PricesComponent = () => {
     const [quoteData, setQouteData] = useState(undefined);
 
-    useEffect(() => {
+   /* useEffect(() => {
         api.get(endpoints.getQoute('AAPL'))
             .then((res) => {
                 console.log(res.data);
                 setQouteData(res.data.quote);
             }).catch((err) => { });
     }, []);
+    */
 
 
     if (!quoteData) return null;
@@ -21,7 +23,7 @@ const PricesComponent = () => {
     return (
         <View style={appStyles2.flexContainer}>
 
-            <Text style={appStyles2.text}>Apple Current $: {quoteData.currentPrice}</Text>
+        <StockBox/>
         </View>
     );
 };

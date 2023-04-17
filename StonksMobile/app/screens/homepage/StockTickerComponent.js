@@ -3,58 +3,48 @@ import { View, Text, StyleSheet } from "react-native";
 import appStyles2 from "../../globals/styles/AppStyles2";
 import api from "../../api/Api";
 import endpoints from "../../api/Endpoints";
+import Ionicons from "../../assets/rneIcons/Ionicons";
 
-const BoxRow = () => {
+const StockTickerComponent = () => {
  
 
-  const [quoteData, setQouteData] = useState(undefined);
-
-    useEffect(() => {
-        api.get(endpoints.getQoute('AAPL'))
-            .then((res) => {
-                console.log(res.data);
-                setQouteData(res.data.quote);
-            }).catch((err) => { });
-    }, []);
-
-
-    if (!quoteData) return null;
-    const quoteArray = Object.values(quoteData);
-    const currentPrice = quoteArray[0]
-    console.log("this is the data" + quoteArray)
-    
   return (
     <View style={styles.container}>
-      {quoteArray.slice(0, 4).map((data, index) => (
-        <View key={index} style={styles.box}>
-          <Text style={styles.boxText}>this{data[0]}</Text>
-          
+      
+        <View  style={styles.box}>
+          <View style={appStyles2.text3}>
+            <Text style={appStyles2.text3} >AAPL</Text>
+            <Text style={appStyles2.priceText} >$10.95</Text>
+          </View>
+          <View>
+            <Text style={appStyles2.greenText} ><Ionicons name={"ios-trending-up-outline"}/>42.34%</Text>
+          </View>
         </View>
-      ))}
+      
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex:1,
-      flexDirection: 'row',
-      marginHorizontal: 20,
-      backgroundColor: 'gray', // add background color
-      paddingTop: 10, // add top padding
-      width: "95%"
-    },
-    box: {
-      width: 85,
-      height: 85,
-      margin:"10px",
-      backgroundColor: 'black', // set box background to black
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    boxText: {
-      color: 'white',
-    },
-  });
-  
-  export default StockTickerComponent;
+  container: {
+    flexDirection: "row",
+    marginHorizontal: 20,
+    backgroundColor: "gray",
+    paddingTop: 10,
+    width: "95%",
+    justifyContent: "space-between",
+    paddingLeft: 10,
+  },
+  box: {
+    width: 85,
+    height: 85,
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  boxText: {
+    color: "white",
+  },
+});
+
+export default StockTickerComponent;

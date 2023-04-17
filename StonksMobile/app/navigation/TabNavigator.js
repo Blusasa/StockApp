@@ -1,8 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Groups from '../screens/userGroupsPage/UserGroupsScreen';
-import Profile from '../screens/profilePage/Profile';
-import HomeScreen from '../screens/homePage/HomeScreen';
+import Profile from '../screens/profilePage/Profile'
+import HomeScreen from '../screens/homepage/HomeScreen';
 
 import Ionicons from '../assets/rneIcons/Ionicons';
 import UserAssets from '../screens/userAssetsPage/UserAssets';
