@@ -1,20 +1,60 @@
 import React from "react";
-import { useState } from "react";
+import { TextInput, StyleSheet, View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
-import { TextInput, View } from "react-native";
-import appStyles from "../globals/styles/AppStyles";
+const CustomTextInput = ({ placeholderText, styles, hideGradient }) => {
+    const textInputElement = (
+        <TextInput
+            style={[InputStyles(styles).textInputBox]}
+            placeholder={placeholderText}
+            placeholderTextColor={"white"}
+        />
+    );
 
-const customTextInput = ({placeholderText, styles}) => {
+
+    const wrappedInGradientInput = (
+        <LinearGradient
+            content
+            colors={['#B401FC', '#E91EAC']}
+            start={{ x: 0, y: 1 }}
+            end={{ x: 1, y: 0 }}
+            // locations={[0.35, 0.95]}
+            style={[InputStyles().gradientStyle]}
+        >
+            {textInputElement}
+        </LinearGradient>
+    );
 
     return (
-        <View style={{backgroundColor: "black", borderStyle: "solid", borderColor: "black", borderWidth: "3px"}}>
-        <TextInput
-            caretHidden={true}
-            style={appStyles.textInputBox}
-            placeholder={placeholderText}
-        />
+        <View style={{ flexShrink: 1, margin: 7 }}>
+            {hideGradient ? textInputElement : wrappedInGradientInput}
         </View>
     );
 };
 
-export default customTextInput;
+
+const InputStyles = (styles) => StyleSheet.create({
+    gradientStyle: {
+        justifyContent: "center",
+        alignContent: "center",
+        margin: 7,
+        //The padding controls the size of the "BORDER" for the TextInput
+        padding: 3,
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderRadius: 25,
+        overflow: "hidden",
+    },
+    textInputBox: {
+        height: 40,
+        paddingLeft: 20,
+        borderRadius: 25,
+        backgroundColor: "black",
+        textAlign: "left",
+        fontFamily: "Poppins_400Regular",
+        color: "white",
+        ...styles
+    }
+});
+
+export default CustomTextInput;

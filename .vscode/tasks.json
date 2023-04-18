@@ -41,7 +41,7 @@
                 "run"
             ],
             "options": {
-                "cwd": "${workspaceFolder}/StonksBackend"
+                "cwd": "${workspaceFolder}/StonksServer/StonksAPI"
             },
             "problemMatcher": "$msCompile"
         },
