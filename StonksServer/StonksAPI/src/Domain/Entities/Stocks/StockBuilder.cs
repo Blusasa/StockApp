@@ -35,51 +35,51 @@ public class StockBuilder
 
     private void checkCandleDictNull()
     {
-        if (_stock.CandleDatas == null) _stock.CandleDatas = new Dictionary<string, IEnumerable<CandleData>>();
+        if (_stock.CandleData == null) _stock.CandleData = new Dictionary<string, IEnumerable<Candle>>();
     }
 
     private void clearDupeKeys(string key)
     {
-        if (_stock.CandleDatas.ContainsKey(key)) _stock.CandleDatas.Remove(key);
+        if (_stock.CandleData.ContainsKey(key)) _stock.CandleData.Remove(key);
     }
 
-    public StockBuilder Add1HCandle(IEnumerable<CandleData> hrCandles)
+    public StockBuilder Add1HCandle(IEnumerable<Candle> hrCandles)
     {
         checkCandleDictNull();
         clearDupeKeys(Hour);
-        _stock.CandleDatas.Add(Hour, hrCandles);
+        _stock.CandleData.Add(Hour, hrCandles);
         return this;
     }
     
-    public StockBuilder Add1DCandle(IEnumerable<CandleData> dayCandles)
+    public StockBuilder Add1DCandle(IEnumerable<Candle> dayCandles)
     {
         checkCandleDictNull();
         clearDupeKeys(Day);
-        _stock.CandleDatas.Add(Day, dayCandles);
+        _stock.CandleData.Add(Day, dayCandles);
         return this;
     }
 
-    public StockBuilder Add1WCandle(IEnumerable<CandleData> wkCandles)
+    public StockBuilder Add1WCandle(IEnumerable<Candle> wkCandles)
     {
         checkCandleDictNull();
         clearDupeKeys(Week);
-        _stock.CandleDatas.Add(Week, wkCandles);
+        _stock.CandleData.Add(Week, wkCandles);
         return this;
     }
 
-    public StockBuilder Add1MCandle(IEnumerable<CandleData> monthCandles)
+    public StockBuilder Add1MCandle(IEnumerable<Candle> monthCandles)
     {
         checkCandleDictNull();
         clearDupeKeys(Month);
-        _stock.CandleDatas.Add(Month, monthCandles);
+        _stock.CandleData.Add(Month, monthCandles);
         return this;
     }
     
-    public StockBuilder Add1YCandle(IEnumerable<CandleData> yrCandles)
+    public StockBuilder Add1YCandle(IEnumerable<Candle> yrCandles)
     {
         checkCandleDictNull();
         clearDupeKeys(Year);
-        _stock.CandleDatas.Add(Year, yrCandles);
+        _stock.CandleData.Add(Year, yrCandles);
         return this;
     }
 
