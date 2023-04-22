@@ -7,18 +7,40 @@ namespace StonksAPI.Infrastructure.Repos;
 
 public class StockRepo : IStockRepo
 {
-    private IMarketClient _marketClient;
-
+    private readonly IMarketClient _marketClient;
+    private readonly IDictionary<Candle.TimeInterval, Candle.Resolution> _resolutions;
     public StockRepo(IMarketClient client)
     {
         _marketClient = client;
+        _resolutions = new Dictionary<Candle.TimeInterval, Candle.Resolution>();
+        
+        _resolutions.Add(Candle.TimeInterval.Hr, Candle.Resolution.One);
+        _resolutions.Add(Candle.TimeInterval.Day, Candle.Resolution.Five);
+        _resolutions.Add(Candle.TimeInterval.Week, Candle.Resolution.Thirty);
+        _resolutions.Add(Candle.TimeInterval.Month, Candle.Resolution.Sixty);
+        _resolutions.Add(Candle.TimeInterval.Year, Candle.Resolution.D);
     }
 
-    public async Task<Stock> GetStockWithCandles(string symbol)
+    public async Task<Stock> GetStockWithCandles(string symbol, string resolution)
     {
-        string json =
-            await _marketClient.GetStockCandleAsync(symbol, CandleResolution.Five, DateTime.Now.AddDays(-1),
-                DateTime.Now);
+        symbol = symbol.ToUpper();
+
+        var getInterval = () =>
+        {
+            return resolution switch
+            {
+                "H" => Candle.TimeInterval.Hr,
+                "W" => Candle.TimeInterval.Week,
+                "M" => Candle.TimeInterval.Month,
+                "Y" => Candle.TimeInterval.Year,
+                _ => Candle.TimeInterval.Day
+            };
+        };
+
+        var interval = getInterval();
+        
+        var json =
+            await _marketClient.GetStockCandleAsync(symbol, interval, _resolutions[interval]);
 
         var candleData = ParseCandles(json);
 
@@ -28,54 +50,16 @@ public class StockRepo : IStockRepo
     public async Task<Stock> GetStockWithQuote(string symbol)
     {
         symbol = symbol.ToUpper();
+        
+        var json = await _marketClient.GetStockQuoteAsync(symbol);
+        var quote = ParseQuote(JsonSerializer.Deserialize<JsonElement>(json));
 
-        string json;
-        Quote quote;
-
-        /*
-         * First scenario is that it is either Mon after 8 pm or Tue before 4 am. Candles pulled will be from close Mon and previous close Fri.
-         */
-        bool requiresLastFridayCandles =
-            (DateTime.Today.DayOfWeek == DayOfWeek.Monday && DateTime.Now.Hour > 20) ||
-            (DateTime.Today.DayOfWeek == DayOfWeek.Tuesday && DateTime.Now.Hour < 4);
-
-        /*
-         * Second scenario is if the client requests a quote over the weekend. Candles pulled will be from close Thur to close Fri. 
-         */
-        bool isWeekend = (DateTime.Today.DayOfWeek == DayOfWeek.Saturday ||
-                          DateTime.Today.DayOfWeek == DayOfWeek.Sunday);
-
-        // if (requiresLastFridayCandles)
-        // {
-        //     json = await GetQuoteFromMonday(symbol); 
-        //     quote = ParseQuoteFromCandles(JsonSerializer.Deserialize<JsonElement>(json));
-        // } else if (isWeekend)
-        // {
-        //     json = await GetQuoteFromWeekend(symbol);
-        //     quote = ParseQuoteFromCandles(JsonSerializer.Deserialize<JsonElement>(json));
-        // } else
-        // {
-            json = await _marketClient.GetStockQuoteAsync(symbol);
-            quote = ParseQuote(JsonSerializer.Deserialize<JsonElement>(json));
-        // }
 
         Stock stock = new StockBuilder().AddQuote(quote).Build();
         return stock;
     }
 
-    private async Task<string> GetQuoteFromWeekend(string symbol)
-    {
-        return await _marketClient.GetStockCandleAsync(symbol, CandleResolution.D,
-            DateTimeUtils.GetPreviousThurdayCloseFromNow(), DateTimeUtils.GetPreviousFridayCloseFromNow());
-    }
-
-    private async Task<string> GetQuoteFromMonday(string symbol)
-    {
-        return await _marketClient.GetStockCandleAsync(symbol, CandleResolution.D,
-            DateTimeUtils.GetPreviousFridayCloseFromNow(), DateTimeUtils.GetTodayAt8PM());
-    }
-
-    private IEnumerable<CandleData> ParseCandles(string json)
+    private IEnumerable<Candle> ParseCandles(string json)
     {
         JsonElement jsonObj = JsonSerializer.Deserialize<JsonElement>(json);
 
@@ -86,10 +70,10 @@ public class StockRepo : IStockRepo
         JsonElement timeStamp = jsonObj.GetProperty("t");
         JsonElement volume = jsonObj.GetProperty("v");
 
-        var candleData = new List<CandleData>();
+        var candleData = new List<Candle>();
         for (int i = 0; i < openPrice.GetArrayLength(); i++)
         {
-            var data = new CandleData();
+            var data = new Candle();
             data.OpenPrice = openPrice[i].GetDouble();
             data.ClosePrice = closePrice[i].GetDouble();
             data.HighPrice = highPrice[i].GetDouble();
@@ -160,6 +144,11 @@ public class StockRepo : IStockRepo
     }
 
     public async Task<Stock> GetFullStock(string symbol)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Stock> GetStockNews(string symbol)
     {
         throw new NotImplementedException();
     }

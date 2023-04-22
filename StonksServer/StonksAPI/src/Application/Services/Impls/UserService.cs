@@ -1,31 +1,33 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.JsonWebTokens;
+
 using StonksAPI.Application.DTOs;
 using StonksAPI.Application.Services.Contracts;
 using StonksAPI.Domain.Entities;
-using StonksAPI.Domain.Interfaces.Repositories;
+using StonksAPI.Helpers;
+using StonksAPI.Configs;
+using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace StonksAPI.Application.Services.Impls
 {
     public class UserService : IUserService{
         
-        private UserManager<AppUser> _userManager;
-        private SignInManager<AppUser> _signInManager;
-        private IConfiguration _config;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly JwtConfig _config;
 
-        public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration config){
+        public UserService(UserManager<AppUser> userManager, IOptions<JwtConfig> config){
             _userManager = userManager;
-            _signInManager = signInManager;
-            _config = config;
+            _config = config.Value;
         }
         
-        public async Task<IdentityResult> CreateUser(RegistrationDTO newUser)
+        public async Task<AuthResult> CreateUser(RegistrationDTO newUser)
         {
             AppUser user = new AppUser()
             {
@@ -34,39 +36,82 @@ namespace StonksAPI.Application.Services.Impls
                 PhoneNumber = newUser.Phone
             };
 
-            return await _userManager.CreateAsync(user, newUser.Password);
+            var isCreated = await _userManager.CreateAsync(user, newUser.Password);
+
+            if (isCreated.Succeeded)
+            {
+                var token = GenerateJwt(user);
+                return new AuthResult
+                {
+                    Token = token,
+                    Authenticated = true,
+                };
+            }
+
+            return new AuthResult
+            {
+                Authenticated = false,
+                errors = isCreated.Errors.Select(e => e.Description).ToList()
+            };
         }
 
-        public async Task<string> Login(LoginDTO login)
+        public async Task<AuthResult> Login(LoginDTO login)
         {
             var user = await _userManager.FindByNameAsync(login.Username);
             if (user != null && await _userManager.CheckPasswordAsync(user, login.Password))
             {
-
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                var expires = DateTime.Now.AddMinutes(5);
-
-                var claims = new[]
+                var token = GenerateJwt(user);
+                return new AuthResult
                 {
-                    new Claim(JwtRegisteredClaimNames.Name, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                    Token = token,
+                    Authenticated = true
                 };
-                
-                var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-                    _config["Jwt:Audience"],
-                    claims,
-                    expires: DateTime.Now.AddMinutes(15),
-                    signingCredentials: creds);
-
-                return new JwtSecurityTokenHandler().WriteToken(token);
             }
 
-            return null;
+            return new AuthResult
+            {
+                Authenticated = false,
+                errors =new List<string>
+                {
+                    "Invalid credentials"
+                }
+            };
         }
-        
-        [Authorize]
-        [Route("/checkIfTokenWorks")]
+
+        private string GenerateJwt(AppUser user)
+        {
+            var jwtTokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_config.Key);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new []
+                {
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToUniversalTime().ToString())
+                }),
+                
+                NotBefore = DateTime.Now,
+                Expires = DateTime.Now.AddMinutes(60),
+                Issuer = _config.Iss,
+                Audience = _config.Aud,
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256),
+            };
+
+            var token = jwtTokenHandler.CreateToken(tokenDescriptor);
+            var jwt = jwtTokenHandler.WriteToken(token);
+            return jwt;
+        }
+
+        public async Task<AppUser> GetUserByEmailAsync(string email)
+        {
+            return await _userManager.FindByEmailAsync(email);
+        }
+
+        public  string GetUserBalanceHistory(AppUser user)
+        {
+            return "woo";
+        }
+
         public Task AddOrderToUser(Order order)
         {
             throw new NotImplementedException();
