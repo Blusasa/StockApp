@@ -12,7 +12,25 @@ public class StockService : IStockService
     {
         _stockRepo = repo;
     }
-    
+
+    public async Task<double> GetLivePriceAsync(string symbol)
+    {
+        var day = DateTime.Today.DayOfWeek;
+        var after8PmOnFriday = (DateTime.Today.DayOfWeek == DayOfWeek.Friday && DateTime.Now.Hour > 20) ? true : false;
+        var isWeekend = day is DayOfWeek.Saturday or DayOfWeek.Sunday ? true : false;
+        var before8AmOnMonday = (DateTime.Today.DayOfWeek == DayOfWeek.Monday && DateTime.Now.Hour < 8) ? true : false;
+
+        if (after8PmOnFriday || isWeekend || before8AmOnMonday)
+        {
+            var s = _stockRepo.GetStockWithQuote(symbol);
+            var stock = s.Result;
+
+            return stock.Quote.CurrentPrice;
+        }
+
+        return await _stockRepo.GetLiveStockPriceAsync(symbol);
+    }
+
     public async Task<Stock> GetStockCandleData(string symbol, string resolution)
     {
 

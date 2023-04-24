@@ -8,4 +8,5 @@ public class ClientURLConstants
     internal static readonly string StockQuote = "/quote";
     internal static readonly string StockCandle = "/stock/candle";
     internal static readonly string SymbolsOnExchange = "/stock/symbol?exchange=US&mic=XNYS";
+    internal static readonly string SocketURI = "wss://ws.finnhub.io";
 }

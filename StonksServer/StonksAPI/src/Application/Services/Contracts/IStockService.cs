@@ -4,6 +4,9 @@ namespace StonksAPI.Application.Services.Contracts;
 
 public interface IStockService
 {
+
+    public Task<double> GetLivePriceAsync(string symbol);
+    
     public Task<Stock> GetStockCandleData(string symbol, string resolution);
 
     public Task<Stock> GetStockQuote(string symbol);

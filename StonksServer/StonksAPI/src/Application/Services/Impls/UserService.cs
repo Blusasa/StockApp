@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.IdentityModel.JsonWebTokens;
 
 using StonksAPI.Application.DTOs;
 using StonksAPI.Application.Services.Contracts;
 using StonksAPI.Domain.Entities;
 using StonksAPI.Helpers;
 using StonksAPI.Configs;
+using StonksAPI.Domain.Interfaces;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace StonksAPI.Application.Services.Impls
@@ -21,9 +21,11 @@ namespace StonksAPI.Application.Services.Impls
         
         private readonly UserManager<AppUser> _userManager;
         private readonly JwtConfig _config;
+        private readonly IOrderProcessing _orderProcessing;
 
-        public UserService(UserManager<AppUser> userManager, IOptions<JwtConfig> config){
+        public UserService(UserManager<AppUser> userManager, IOrderProcessing orderProcessing, IOptions<JwtConfig> config){
             _userManager = userManager;
+            _orderProcessing = orderProcessing;
             _config = config.Value;
         }
         
@@ -76,6 +78,25 @@ namespace StonksAPI.Application.Services.Impls
                     "Invalid credentials"
                 }
             };
+        }
+
+        public async Task<Order> SubmitOrder(TradeRequestDTO orderRequest, string userId)
+        {
+            var order = new Order()
+            {
+                Symbol = orderRequest.Symbol,
+                StockRequestedByCurrency = orderRequest.RequestedMonetaryAmount,
+                StockRequestedByShare = orderRequest.RequestedSharesAmount,
+                TimeStamp = DateTime.Now,
+            };
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new Exception("User could not be found");
+            }
+
+            return order;
         }
 
         private string GenerateJwt(AppUser user)

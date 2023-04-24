@@ -8,10 +8,10 @@ namespace StonksAPI.Application.Services.Contracts{
         public Task<AuthResult> CreateUser(RegistrationDTO newUser);
 
         public Task<AuthResult> Login(LoginDTO login);
+        
+        public Task<Order> SubmitOrder(TradeRequestDTO orderRequest, string id);
 
         public Task<AppUser> GetUserByEmailAsync(string email);
-
-        public Task AddOrderToUser(Order order);
 
         public Task GetAssetsFromUser(AppUser user);
 

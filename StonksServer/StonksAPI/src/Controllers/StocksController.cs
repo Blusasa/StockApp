@@ -5,12 +5,7 @@ using StonksAPI.Domain.Entities.Stocks;
 
 namespace StonksAPI.Controllers{
     
-    [Authorize]
-    [ApiController]
-    [Route("api/[controller]")]
-    [Produces("application/json")]
-    [Consumes("application/json")]
-    public class StocksController : ControllerBase
+    public class StocksController : BaseApiController
     {
         private readonly IStockService _stockService;
 
@@ -31,7 +26,7 @@ namespace StonksAPI.Controllers{
         public async Task<ActionResult> GetStockCandleAsync(string symbol, [FromQuery] string resolution)
         {
             resolution = resolution.ToUpper();
-            var supportedResolutions = new[] { "H, D, W, M, Y" };
+            var supportedResolutions = new[] { "H", "D", "W", "M", "Y" };
             var reqResolutionIsSupported = supportedResolutions.Any(r => r == resolution);
             
             
