@@ -2,29 +2,40 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace StonksAPI.Controllers;
-
-[Authorize]
-[ApiController]
-[Route("api/[controller]")]
-public class GroupsController : ControllerBase
+public class GroupsController : BaseApiController
 {
 
     [HttpPost]
-    [Route("new-group")]
+    [Route("create")]
     public async Task<IActionResult> CreateNewGroup()
+    {
+        return Ok();
+    }
+
+    [HttpGet]
+    [Route("join-code")]
+    public async Task<IActionResult> GetJoinCode()
+    {
+        return Ok();
+    }
+
+
+    [HttpDelete]
+    [Route("delete/{groupID}")]
+    public async Task<IActionResult> DeleteGroup()
     {
         return Ok();
     }
     
     [HttpPost]
-    [Route("invite-member")]
+    [Route("invite/{userID}")]
     public async Task<IActionResult> InviteUserToGroup()
     {
         return Ok();
     }
 
     [HttpDelete]
-    [Route("kick-member")]
+    [Route("kick/{userID}")]
     public async Task<IActionResult> KickUserFromGroup()
     {
         return Ok();

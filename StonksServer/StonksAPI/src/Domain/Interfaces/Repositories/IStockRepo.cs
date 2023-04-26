@@ -4,6 +4,8 @@ namespace StonksAPI.Domain.Interfaces.Repositories;
 
 public interface IStockRepo
 {
+    public Task<double> GetLiveStockPriceAsync(string symbol);
+    
     public Task<Stock> GetStockWithCandles(string symbol, string resolution);
 
     public Task<Stock> GetStockWithQuote(string symbol);

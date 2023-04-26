@@ -1,7 +1,9 @@
-﻿using System.Text.Json;
+﻿using System.Collections.Concurrent;
+using System.Text.Json;
 using StonksAPI.Domain.Entities.Stocks;
 using StonksAPI.Domain.Interfaces.Clients;
 using StonksAPI.Domain.Interfaces.Repositories;
+using StonksAPI.Infrastructure.Clients.Market;
 
 namespace StonksAPI.Infrastructure.Repos;
 
@@ -9,7 +11,9 @@ public class StockRepo : IStockRepo
 {
     private readonly IMarketClient _marketClient;
     private readonly IDictionary<Candle.TimeInterval, Candle.Resolution> _resolutions;
-    public StockRepo(IMarketClient client)
+    private readonly ISocketQueueManager _socketQueueManager;
+
+    public StockRepo(IMarketClient client, ISocketQueueManager socketManager)
     {
         _marketClient = client;
         _resolutions = new Dictionary<Candle.TimeInterval, Candle.Resolution>();
@@ -19,6 +23,20 @@ public class StockRepo : IStockRepo
         _resolutions.Add(Candle.TimeInterval.Week, Candle.Resolution.Thirty);
         _resolutions.Add(Candle.TimeInterval.Month, Candle.Resolution.Sixty);
         _resolutions.Add(Candle.TimeInterval.Year, Candle.Resolution.D);
+
+        _socketQueueManager = socketManager;
+    }
+
+
+    public async Task<double> GetLiveStockPriceAsync(string symbol)
+    {
+        var json = await _socketQueueManager.GetPriceAsync(symbol);
+        var element = JsonSerializer.Deserialize<JsonElement>(json);
+
+        var data = element.GetProperty("data")[0];
+        var price = data.GetProperty("p").GetDouble();
+
+        return price;
     }
 
     public async Task<Stock> GetStockWithCandles(string symbol, string resolution)
@@ -152,4 +170,5 @@ public class StockRepo : IStockRepo
     {
         throw new NotImplementedException();
     }
+    
 }

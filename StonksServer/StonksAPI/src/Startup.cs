@@ -18,6 +18,8 @@ using StonksAPI.Infrastructure.Clients;
 using StonksAPI.Infrastructure.Clients.Market;
 using StonksAPI.Infrastructure.Repos;
 using StonksAPI.Configs;
+using StonksAPI.Domain.Interfaces;
+using StonksAPI.Infrastructure;
 
 namespace StonksAPI
 {
@@ -165,6 +167,10 @@ namespace StonksAPI
             //setup Client injections
             services.AddScoped<IMarketClient, FinnHubClient>();
             services.AddScoped<IDatabaseClient, DatabaseClient>();
+            services.AddSingleton<IMarketSocket, MarketSocket>();
+            services.AddSingleton<ISocketQueueManager, SocketQueueManager>();
+
+            services.AddSingleton<IOrderProcessing, OrderProcessing>();
 
             //setup data store injections
             services.AddScoped<IStockRepo, StockRepo>();

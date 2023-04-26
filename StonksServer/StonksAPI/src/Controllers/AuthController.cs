@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+
 using StonksAPI.Application.DTOs;
 using StonksAPI.Application.Services.Contracts;
 using StonksAPI.Configs;
 
 namespace StonksAPI.Controllers;
-
-
-[ApiController]
-[Route("api/[controller]")]
-public class AuthController : ControllerBase
+public class AuthController : BaseApiController
 {
     private readonly JwtConfig _jwtConfig;
     private readonly IUserService _userService;
@@ -23,6 +21,7 @@ public class AuthController : ControllerBase
 
 
     [HttpPost]
+    [AllowAnonymous]
     [Route("register")]
     public async Task<IActionResult> Register([FromBody] RegistrationDTO registration)
     {
@@ -37,6 +36,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost]
+    [AllowAnonymous]
     [Route("login")]
     public async Task<IActionResult> Login([FromBody] LoginDTO login)
     {
