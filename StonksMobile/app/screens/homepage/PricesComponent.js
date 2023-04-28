@@ -5,7 +5,7 @@ import api from "../../api/Api";
 import endpoints from "../../api/Endpoints";
 import StockBox from "../../components/stockbox/StockBox";
 import AppStyles from "../../globals/styles/AppStyles";
-import StockBox from "../../components/stockbox/StockBox"
+
 
 const PricesComponent = () => {
     const [quoteData, setQouteData] = useState(null);
@@ -31,10 +31,10 @@ const PricesComponent = () => {
         }
     ];
 
-   /* useEffect(() => {
+    useEffect(() => {
         setQouteData(stocks);
     }, [])
-    */
+    
 
 
     if(!quoteData) {
@@ -45,7 +45,7 @@ const PricesComponent = () => {
         <View style={[AppStyles.flexContainer, AppStyles.mainApp]}>
             {quoteData.map((value, index) => <StockBox key={value + index} quote={value}/>)}
 
-            <Text style={appStyles2.text}>Apple Current $: {quoteData.currentPrice}</Text>
+            {/* <Text style={appStyles2.text}> {quoteData.currentPrice}</Text> */}
         </View>
     );
 };

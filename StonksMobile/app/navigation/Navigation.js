@@ -13,7 +13,7 @@ function Navigation() {
 
     return(
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Homepage">
+            <Stack.Navigator initialRouteName="Login">
                <Stack.Screen name ="LoginScreen" component={LoginScreen}/>
                 <Stack.Screen name ="CreateAcoount" component={CreateAccount}/>
                 <Stack.Screen name="LaunchScreen" component={SplashScreen} />
