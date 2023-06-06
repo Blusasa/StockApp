@@ -9,6 +9,6 @@ public interface IMarketClient
     
     public Task<string> GetStockQuoteAsync(string symbol);
 
-    public Task<string> GetStockCandleAsync(string symbol, CandleResolution resolution, DateTime from, DateTime to);
+    public Task<string> GetStockCandleAsync(string symbol, Candle.TimeInterval interval, Candle.Resolution resolution);
     
 }

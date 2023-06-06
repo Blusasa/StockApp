@@ -1,14 +1,14 @@
 import React from 'react';
 import { useEffect } from 'react';
 
-import { View } from 'react-native';
 import {
   useFonts, Poppins_300Light_Italic,
   Poppins_400Regular, Poppins_700Bold, Poppins_600SemiBold
 } from '@expo-google-fonts/poppins';
 
 import Navigation from './app/navigation/MainAppNavigation';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'react-native';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -24,9 +24,12 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <View style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <StatusBar
+          barStyle={"light-content"}
+        />
         <Navigation />
-      </View>
+      </SafeAreaView>
     </SafeAreaProvider>
   );
 }

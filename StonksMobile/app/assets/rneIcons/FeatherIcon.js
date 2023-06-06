@@ -1,11 +1,11 @@
 import React from "react";
 import { Icon } from '@rneui/themed';
 
-const FeatherIcon = ({name, color}) => {
+const FeatherIcon = ({name, color, size}) => {
   return (
     <Icon
       name={name}
-      size={30}
+      size={size}
       type="feather"
       color={color}
     />

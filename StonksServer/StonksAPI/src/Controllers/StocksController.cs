@@ -1,13 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StonksAPI.Application.Services.Contracts;
 using StonksAPI.Domain.Entities.Stocks;
 
 namespace StonksAPI.Controllers{
     
-    [ApiController]
-    [Route("api/stocks")]
-    [Produces("application/json")]
-    public class StocksController : ControllerBase
+    public class StocksController : BaseApiController
     {
         private readonly IStockService _stockService;
 
@@ -21,21 +19,42 @@ namespace StonksAPI.Controllers{
         /// </summary>
         /// <returns>Stock</returns>
         [HttpGet]
-        [Route("/candles/")]
+        [Route("{symbol}/candles")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> GetStockCandleAsync([FromQuery] string symbol)
+        public async Task<ActionResult> GetStockCandleAsync(string symbol, [FromQuery] string resolution)
         {
-            Stock stock = await _stockService.GetStockCandleData(symbol);
+            resolution = resolution.ToUpper();
+            var supportedResolutions = new[] { "H", "D", "W", "M", "Y" };
+            var reqResolutionIsSupported = supportedResolutions.Any(r => r == resolution);
+            
+            
+            if (string.IsNullOrEmpty(resolution))
+            {
+                return BadRequest("Resolution query required");
+            } else if (!reqResolutionIsSupported)
+            {
+                return BadRequest("Resolution type not supported");
+            }
+
+            Stock stock = await _stockService.GetStockCandleData(symbol, resolution);
             return Ok(stock);
         }
         
         [HttpGet]
-        [Route("/quote")]
-        public async Task<IActionResult> GetStockQuote([FromQuery] string symbol)
+        [Route("{symbol}/quote")]
+        public async Task<IActionResult> GetStockQuote(string symbol)
         {
             Stock stock = await _stockService.GetStockQuote(symbol);
+            return Ok(stock);
+        }
+
+        [HttpGet]
+        [Route("{symbol}/news")]
+        public async Task<IActionResult> GetStockNews(string symbol)
+        {
+            var stock = await _stockService.GetStockNews(symbol);
             return Ok(stock);
         }
     }

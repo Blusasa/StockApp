@@ -6,6 +6,8 @@ using AspNetCore.Identity.MongoDbCore.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+
 using StonksAPI.Application.Services.Contracts;
 using StonksAPI.Application.Services.Impls;
 using StonksAPI.CustomJSONFormatters;
@@ -15,6 +17,9 @@ using StonksAPI.Domain.Interfaces.Repositories;
 using StonksAPI.Infrastructure.Clients;
 using StonksAPI.Infrastructure.Clients.Market;
 using StonksAPI.Infrastructure.Repos;
+using StonksAPI.Configs;
+using StonksAPI.Domain.Interfaces;
+using StonksAPI.Infrastructure;
 
 namespace StonksAPI
 {
@@ -38,7 +43,7 @@ namespace StonksAPI
                 });
 
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            ConfigureSwagger(services);
             services.AddHttpContextAccessor();
 
             ConfigureCors(services);
@@ -47,13 +52,45 @@ namespace StonksAPI
             ConfigureAuth(services);
         }
 
+        private void ConfigureSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v0.3", new OpenApiInfo
+                {
+                    Title = "Stonks API", Version = "0.3"
+                });
+                
+                var jwtSecurityScheme = new OpenApiSecurityScheme
+                {
+                    BearerFormat = "JWT",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    Description = "JWT Bearer token",
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+
+                c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { jwtSecurityScheme, Array.Empty<string>() }
+                });
+            });
+        }
+
         private void ConfigureIdentity(IServiceCollection services)
         {
             var mongoIdentityConfig = new MongoDbIdentityConfiguration()
             {
                 MongoDbSettings = new MongoDbSettings()
                 {
-                    
                     ConnectionString = _config.GetConnectionString("MongoDb"),
                     DatabaseName = "Stonks_Dev"
                 },
@@ -75,42 +112,65 @@ namespace StonksAPI
                     options.Lockout.MaxFailedAccessAttempts = 5;
                 }
             };
-            
+
             services.ConfigureMongoDbIdentity<AppUser>(mongoIdentityConfig);
         }
 
         private void ConfigureAuth(IServiceCollection services)
         {
-
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-                options.LoginPath = "/Users/Login";
-                options.SlidingExpiration = true;
-            });
-            
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(options =>
                 {
+                    var key = Encoding.ASCII.GetBytes(_config.GetSection("Jwt:Key").Value);
+                    
+                    options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = _config["Jwt:Issuer"],
-                        ValidAudience = _config["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]))
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        
+                        //false for dev
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        RequireExpirationTime = false,
+                        
+                        ValidateLifetime = true,
+                    };
+
+                    options.Events = new JwtBearerEvents()
+                    {
+                        OnMessageReceived = async context =>
+                        {
+                            var pause = 2 + 2;
+                        },
+                        OnAuthenticationFailed = async context =>
+                        {
+                            var ex = context.Exception;
+                        },
+                        OnForbidden = async context =>
+                        {
+                            var ex = context;
+                        }
                     };
                 });
         }
 
         private void ConfigureDependencies(IServiceCollection services)
         {
+            services.Configure<JwtConfig>(_config.GetSection("Jwt"));
+            
             //setup Client injections
             services.AddScoped<IMarketClient, FinnHubClient>();
             services.AddScoped<IDatabaseClient, DatabaseClient>();
+            services.AddSingleton<IMarketSocket, MarketSocket>();
+            services.AddSingleton<ISocketQueueManager, SocketQueueManager>();
+
+            services.AddSingleton<IOrderProcessing, OrderProcessing>();
 
             //setup data store injections
             services.AddScoped<IStockRepo, StockRepo>();
@@ -120,8 +180,6 @@ namespace StonksAPI
             services.AddScoped<SignInManager<AppUser>>();
             services.AddScoped<IStockService, StockService>();
             services.AddScoped<IUserService, UserService>();
-
-            services.AddSingleton(_config);
         }
 
         private void ConfigureCors(IServiceCollection services)
@@ -142,20 +200,25 @@ namespace StonksAPI
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("swagger/v0.3/swagger.json", "Stonks API");
+                    c.RoutePrefix = string.Empty;
+                });
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseCors(CorsPolicy);
+
             app.UseAuthentication();
 
             app.UseAuthorization();
 
-            app.UseCors(CorsPolicy);
-
             app.MapControllers();
+            
         }
     }
 }

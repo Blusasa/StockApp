@@ -1,14 +1,10 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.JsonWebTokens;
 using StonksAPI.Application.DTOs;
 using StonksAPI.Application.Services.Contracts;
 
 namespace StonksAPI.Controllers;
-
-[ApiController]
-[Route("api/user")]
-[Authorize]
 public class UserController : ControllerBase
 {
     private IUserService _userService;
@@ -18,57 +14,66 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
-    [HttpPost]
-    [Route("/register")]
-    [AllowAnonymous]
-    public async Task<IActionResult> CreateNewUser([FromBody] RegistrationDTO newUser)
-    {
-        var result = await _userService.CreateUser(newUser);
-        if (result.Succeeded)
-        {
-            return Ok();
-        }
-
-        var errors = result.Errors.Select(e => e.Description).ToList();
-        return BadRequest(errors);
-    }
-
-    [HttpPost("/login")]
-    [AllowAnonymous]
-    public async Task<IActionResult> LogIn([FromBody] LoginDTO login)
-    { 
-        string token = await _userService.Login(login);
-        if (token == null)
-        {
-            return BadRequest("Invalid credentials");
-        }
-
-        return Ok(token);
-
-    }
-
-    private string GenerateJwt()
-    {
-        return "";
-    }
-
-    [HttpPut("/update")]
+    [HttpPut("update")]
     public async Task<IActionResult> UpdateUser([FromBody] UserDTO user)
     {
         throw new NotImplementedException();
     }
-    
-    [HttpGet("/groups")]
+
+    [HttpGet]
+    [Route("orders")]
+    [Route("orders/{id}")]
+    [Route("orders/{symbol}")]
+    public async Task<IActionResult> GetOrders(string id, string symbol)
+    {
+        return Ok();
+    }
+
+
+    [HttpGet("groups")]
     public async Task<IActionResult> GetUserGroups()
     {
         throw new NotImplementedException();
     }
 
     
-    [HttpGet("/assets")]
-    public async Task<IActionResult> GetUserAssets()
+    [HttpGet]
+    [Route("assets")]
+    [Route("assets/{symbol}")]
+    public async Task<IActionResult> GetUserAssets(string symbol)
     {
         throw new NotImplementedException();
+    }
+
+
+    [HttpGet]
+    [Route("balance/current")]
+    public async Task<IActionResult> GetUserBalance()
+    {
+        return Ok();
+    }
+
+
+    [HttpGet("balance/history")]
+    public async Task<IActionResult> GetUserBalanceHistory([FromQuery] string resolution)
+    {
+        var id = HttpContext.User.Claims.First(c => c.Type == "id").Value;
+        var email = HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Email).Value;
+        return Ok();
+    }
+
+    [HttpGet]
+    [Route("notifications")]
+    public async Task<IActionResult> GetNotifications()
+    {
+        return Ok();
+    }
+
+    [HttpDelete]
+    [Route("notifications/remove/{notificationId}")]
+    public async Task<IActionResult> DeleteNotification(string notifId)
+    {
+        return Ok();
     }
 
 }

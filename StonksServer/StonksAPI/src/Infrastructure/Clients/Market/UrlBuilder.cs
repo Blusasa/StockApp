@@ -2,9 +2,9 @@
 
 public class UrlBuilder
 {
-    private string _host;
-    private string _path;
-    private Dictionary<string, string> _queryParameters = new Dictionary<string, string>();
+    private string _host = string.Empty;
+    private string _path = string.Empty;
+    private readonly Dictionary<string, string> _queryParameters = new Dictionary<string, string>();
 
     public UrlBuilder WithHost(string host)
     {

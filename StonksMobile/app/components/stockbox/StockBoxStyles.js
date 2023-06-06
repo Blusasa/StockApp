@@ -3,15 +3,15 @@ import { StyleSheet } from "react-native";
 
 const StockBoxStyles = StyleSheet.create({
     boxContainer: {
-        flexShrink: 1,
-        width: 300,
+        flex: 1,
+        width: 350,
         flexDirection: "row",
         justifyContent: "space-between", // B401FC/
         padding: 5,
-        // shadowColor: "#E91EAC",
-        // shadowOffset: {width: 4, height: 4},
+        backgroundColor: "#000"
     },
     shadow : {
+        height: 75,
         borderBottomColor: "#E91EAC",
         borderRightColor: "#E91EAC",
         borderTopColor: "#94126d",
@@ -20,9 +20,9 @@ const StockBoxStyles = StyleSheet.create({
         margin: 5
     },
     infoContainer: {
-        flexShrink: 1,
-        textAlign: "left",
-        // justifyContent: "flex-start",
+        flex: 1,
+        alignItems: "flex-start",
+        alignSelf: "flex-start",
     },
     pricingContainer: {
         flexShrink: 1,

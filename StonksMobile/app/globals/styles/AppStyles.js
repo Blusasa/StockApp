@@ -9,6 +9,11 @@ const AppStyles = StyleSheet.create({
     mainApp : {
         backgroundColor: "#000000"
     },
+    devBorder : {
+        borderColor: "red",
+        borderStyle: "dashed",
+        borderWidth: 3
+    },
     text : {
         fontFamily: "Poppins_400Regular",
         alignSelf: "center",
@@ -27,6 +32,16 @@ const AppStyles = StyleSheet.create({
         justifySelf: "center",
         color: "#ffffff",
     },
+    componentContainerBackground: {
+        backgroundColor: "rgba(166,166,166,0.3)"
+    },
+    componentHeader: {
+        fontSize: 30,
+        alignSelf: "flex-start"
+    },
+    pressableIn: {
+        backgroundColor: "rgba(255, 255, 255, 0.25)"
+    }
 });
 
 export default AppStyles;

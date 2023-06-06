@@ -5,7 +5,7 @@ namespace StonksAPI.Domain.Entities{
 
     public class Assets {
     
-        public IEnumerable<Stock> StocksOwned { get; set; }
+        public IEnumerable<OwnedAsset> assets { get; set; }
         
     }
 }

@@ -2,7 +2,7 @@ const endpoints = {
     getStock: "/stock",
     getStockBySymbol: (symbol) => `/stock/${symbol}`,
 
-    getQoute:(symbol) => `/quote?symbol=${symbol}`
+    getQoute:(symbol) => `/api/Stocks/${symbol}/quote`
     
 }
 

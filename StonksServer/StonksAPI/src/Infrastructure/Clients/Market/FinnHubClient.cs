@@ -13,19 +13,34 @@ namespace StonksAPI.Infrastructure.Clients.Market{
             }
         }
         
-        public Task<string> GetStockCandleAsync(string symbol, CandleResolution resolution, DateTime from, DateTime to)
+        public Task<string> GetStockCandleAsync(string symbol, Candle.TimeInterval interval, Candle.Resolution resolution)
         {
-            string resolutionStr = resolution.CompareTo(CandleResolution.Sixty) > 0
+            //Finnhub requires a resolution query filter. Enums are always stored as ints so if the enum is bigger than Sixty(60)
+            //format the string as a digit
+            var resolutionStr = resolution.CompareTo(Candle.Resolution.Sixty) > 0
                 ? resolution.ToString("G")
                 : resolution.ToString("D");
-            
+
+            var now = DateTime.Now;
+            var fromDate = () =>
+            {
+                return interval switch
+                {
+                    Candle.TimeInterval.Hr => DateTime.Now.AddHours(-1),
+                    Candle.TimeInterval.Week => DateTime.Now.AddDays(-7),
+                    Candle.TimeInterval.Month => DateTime.Now.AddMonths(-1),
+                    Candle.TimeInterval.Year => DateTime.Now.AddYears(-1),
+                    _ => DateTime.Now.AddDays(-1)
+                };
+            };
+
             string url = new UrlBuilder()
                 .WithHost(ClientURLConstants.BaseUrl)
                 .WithPath(ClientURLConstants.StockCandle)
                 .WithQueryParameter("symbol", symbol)
                 .WithQueryParameter("resolution", resolutionStr)
-                .WithQueryParameter("from", DateTimeUtils.GetUnixTimeFromDate(from))
-                .WithQueryParameter("to", DateTimeUtils.GetUnixTimeFromDate(to))
+                .WithQueryParameter("from", DateTimeUtils.GetUnixTimeFromDate(fromDate()))
+                .WithQueryParameter("to", DateTimeUtils.GetUnixTimeFromDate(now))
                 .WithQueryParameter("token", ClientURLConstants.TokenParam)
                 .BuildUrl();
             
@@ -35,18 +50,11 @@ namespace StonksAPI.Infrastructure.Clients.Market{
         
         public Task<string> GetStocksFromUSExchangeAsync()
         {
-            // string fullUrl = $"{BaseUrl}{SymbolsOnExchange}{TokenParam}";
-            //
-            // return GetResponse(fullURL);
             throw new NotImplementedException();
         }
 
         public Task<string> GetStockQuoteAsync(string symbol)
         {
-            // string fullURL = $"{BaseUrl}{StockQuote}{symbol}{TokenParam}";
-            //
-            // return GetResponse(fullURL);
-
             String url = new UrlBuilder()
                 .WithHost(ClientURLConstants.BaseUrl)
                 .WithPath(ClientURLConstants.StockQuote)
