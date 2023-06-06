@@ -1,8 +1,11 @@
-import { View, Text} from "react-native";
+import { View, Text } from "react-native";
 import StatsBox from "./StatsBox";
 import AppStyles from "../../globals/styles/AppStyles";
+import AssetChart from "./AssetChart";
+import FavoritedStocks from "../homePage/FavoritedStocks";
+import UserGroups from "../homePage/UserGroups";
 
-const SingleStockPage = ({data}) => {
+const SingleStockPage = ({ data }) => {
 
     const fakeData = {
         "marketCap": 10.39,
@@ -16,9 +19,11 @@ const SingleStockPage = ({data}) => {
     }
 
     return (
-    <View style={[AppStyles.flexContainer, AppStyles.mainApp]}>
-        <StatsBox data={fakeData}/>
-    </View>
+        <View style={[AppStyles.flexContainer, AppStyles.mainApp]}>
+            {/* <AssetChart/>
+            <StatsBox data={fakeData} /> */}
+            <UserGroups/>
+        </View>
     );
 
 

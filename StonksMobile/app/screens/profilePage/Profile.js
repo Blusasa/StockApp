@@ -1,5 +1,4 @@
 import { View, Text, TextInput, Button,StyleSheet, TouchableOpacity,useState } from "react-native";
-import appStyles2 from "../../globals/styles/AppStyles2";
 import AppStyles from "../../globals/styles/AppStyles";
 
 const Profile = () => {

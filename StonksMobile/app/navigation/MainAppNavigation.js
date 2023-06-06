@@ -60,7 +60,7 @@ const Navigation = () => {
 
     return (
         <NavigationContainer
-            // initialState={navState}
+            initialState={navState}
             onStateChange={handleNavStateChange}
         >
             <Stack.Navigator initialRouteName="FrontPage">
