@@ -37,7 +37,6 @@ const HomeScreen = () => {
                 renderItem={({ item }) => item.component}
                 ListFooterComponent={() => (
                     <View>
-                        {/* <Underline /> */}
                         <FavoritedStocks />
                         <DailyMoverContainer />
                         <UserGroups />
