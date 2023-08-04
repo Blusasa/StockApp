@@ -14,22 +14,20 @@ const StockBox = ({ stockInfo }) => {
     }
 
     return (
-        <View style={StockBoxStyles.shadow}>
-            <View style={StockBoxStyles.boxContainer}>
-                <View style={[StockBoxStyles.infoContainer]}>
-                    <Text style={[AppStyles.text, { fontSize: 20, alignSelf: "flex-start" }]}>{stockInfo.name}</Text>
-                    <Text style={[AppStyles.text, { color: "grey", fontSize: 16, alignSelf: "flex-start" }]}>{stockInfo.symbol}</Text>
-                </View>
-                <View style={StockBoxStyles.pricingContainer}>
-                    <Text style={[AppStyles.text, { fontSize: 20 }]}>${round(stockInfo.currentPrice, 2)}</Text>
-                    <View style={StockBoxStyles.percentContainer}>
-                        {
-                            stockIsNegative ?
-                                <FeatherIcon name={"arrow-down-left"} color={"#ff0000"} size={30} />
-                                : <FeatherIcon name={"arrow-up-right"} color={"#00ff00"} size={30} />
-                        }
-                        <Text style={[AppStyles.text, { color: stockIsNegative ? "#ff0000" : "#00ff00", fontSize: 16, alignSelf: "flex-end" }]}>{round(stockInfo.percentChange, 2)}%</Text>
-                    </View>
+        <View style={StockBoxStyles.boxContainer}>
+            <View style={[StockBoxStyles.infoContainer]}>
+                <Text style={[AppStyles.text, { fontSize: 24, alignSelf: "flex-start" }]}>{stockInfo.name}</Text>
+                <Text style={[AppStyles.text, { color: "grey", fontSize: 18, alignSelf: "flex-start" }]}>{stockInfo.symbol}</Text>
+            </View>
+            <View style={StockBoxStyles.pricingContainer}>
+                <Text style={[AppStyles.text, { fontSize: 24 }]}>${round(stockInfo.currentPrice, 2)}</Text>
+                <View style={StockBoxStyles.percentContainer}>
+                    {
+                        stockIsNegative ?
+                            <FeatherIcon name={"arrow-down-left"} color={"#ff0000"} size={30} />
+                            : <FeatherIcon name={"arrow-up-right"} color={"#00ff00"} size={30} />
+                    }
+                    <Text style={[AppStyles.text, { color: stockIsNegative ? "#ff0000" : "#00ff00", fontSize: 18, alignSelf: "flex-end" }]}>{round(stockInfo.percentChange, 2)}%</Text>
                 </View>
             </View>
         </View>

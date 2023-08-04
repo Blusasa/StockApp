@@ -7,16 +7,17 @@ const StockBoxStyles = StyleSheet.create({
         width: 350,
         flexDirection: "row",
         justifyContent: "space-between", // B401FC/
+        alignItems: "center",
         padding: 5,
-        backgroundColor: "#000"
+        backgroundColor: "transparent"
     },
     shadow : {
         height: 75,
-        borderBottomColor: "#E91EAC",
-        borderRightColor: "#E91EAC",
-        borderTopColor: "#94126d",
-        borderLeftColor: "#94126d",
-        borderWidth: 3,
+        // borderBottomColor: "#E91EAC",
+        // borderRightColor: "#E91EAC",
+        // borderTopColor: "#94126d",
+        // borderLeftColor: "#94126d",
+        // borderWidth: 3,
         margin: 5
     },
     infoContainer: {

@@ -7,7 +7,7 @@ const AppStyles = StyleSheet.create({
         alignItems: "center",
     },
     mainApp : {
-        backgroundColor: "#000000"
+        backgroundColor: "#160C33"
     },
     devBorder : {
         borderColor: "red",
@@ -33,7 +33,8 @@ const AppStyles = StyleSheet.create({
         color: "#ffffff",
     },
     componentContainerBackground: {
-        backgroundColor: "rgba(166,166,166,0.3)"
+        backgroundColor: "transparent",
+        // backgroundColor: "rgba(166,166,166,0.3)"
     },
     componentHeader: {
         fontSize: 30,

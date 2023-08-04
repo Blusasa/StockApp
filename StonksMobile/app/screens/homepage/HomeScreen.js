@@ -28,17 +28,23 @@ const HomeScreen = () => {
 
     return (
         <View style={[AppStyles.flexContainer, AppStyles.mainApp]}>
-            <Text style={[AppStyles.textSemiBold, { marginTop: 10 }]}>STONKS</Text>
 
             <FlatList
-                ListHeaderComponent={() => <CustomTextInput placeholderText={"Search for a Stock"} />}
+                ListHeaderComponent={() => (
+                    <View>
+                        <CustomTextInput placeholderText={"Search for a Stock"}/>
+                        <Image source={"../assets/notifBell.svg"}/>
+                    </View>
+                )}
                 ListHeaderComponentStyle={{ width: 350, alignSelf: "center" }}
                 data={components}
                 renderItem={({ item }) => item.component}
                 ListFooterComponent={() => (
                     <View>
                         <FavoritedStocks />
+                        <Underline/>
                         <DailyMoverContainer />
+                        <Underline/>
                         <UserGroups />
                     </View>
                 )}
@@ -52,7 +58,7 @@ const styles = StyleSheet.create({
         flexShrink: 1,
         flexDirection: "row",
         margin: 10,
-        marginBottom: -7.5,
+        // marginBottom: 0,
         padding: 10,
         width: 375
     },
@@ -61,12 +67,13 @@ const styles = StyleSheet.create({
         padding: 5
     },
     balancePrice: {
-        fontSize: 30,
+        fontSize: 28,
         alignSelf: "flex-start"
     },
     balanceHeader: {
-        fontSize: 15,
+        fontSize: 14,
         alignSelf: "flex-start",
+        color: "#8e8D8D",
     },
     img: {
         alignSelf: "flex-end",

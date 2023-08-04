@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, ActivityIndicator, StyleSheet, FlatList, Text } from "react-native";
+import { View, ActivityIndicator, StyleSheet, FlatList, Text, Button } from "react-native";
 import StockBox from "../../components/stockbox/StockBox";
 import AppStyles from "../../globals/styles/AppStyles";
 
@@ -50,10 +50,11 @@ const FavoritedStocks = () => {
 
   return (
     <View style={[AppStyles.flexContainer, AppStyles.componentContainerBackground, styles.container]}>
-        <Text style={[AppStyles.textSemiBold, styles.header]}>Watchlist</Text>
+        <Text style={[AppStyles.textSemiBold, styles.header]}>Prices</Text>
         {quoteData.map((value, index) => (
           <StockBox key={index} stockInfo={value} />
         ))}
+        <Button style={[styles.button]} title="View All ->"/>
     </View>
   );
 };
@@ -65,10 +66,17 @@ const styles = StyleSheet.create({
     maxHeight: 500,
   },
   header: {
-    fontSize: 30,
+    fontSize: 20,
     //this offset is to match the margin/padding of the stockbox's below it
     left: 10,
     alignSelf: "flex-start"
+  },
+  button: {
+    margin: 7,
+    backgroundColor: "transparent",
+    borderColor: "#E91EAC",
+    borderRadius: 5,
+    width: 150,
   }
 })
 
