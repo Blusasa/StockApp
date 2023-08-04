@@ -20,9 +20,7 @@ const SingleStockPage = ({ data }) => {
 
     return (
         <View style={[AppStyles.flexContainer, AppStyles.mainApp]}>
-            {/* <AssetChart/>
-            <StatsBox data={fakeData} /> */}
-            <UserGroups/>
+            <AssetChart/>
         </View>
     );
 
