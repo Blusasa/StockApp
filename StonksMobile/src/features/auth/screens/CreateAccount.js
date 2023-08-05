@@ -1,11 +1,10 @@
 import { LinearGradient } from "expo-linear-gradient";
-import {Text, FlatList } from "react-native";
+import {Text, StyleSheet} from "react-native";
 
 import CustomTextInput from "../../../components/CustomTextInput";
-import AppStyles from "../../globals/styles/AppStyles";
+import AppStyles from "../../../theme/AppStyles";
 
 import CustomBtn from "../../../components/CustomButton";
-import PageStyles from "./FrontPageStyles";
 
 const CreateAccount = ({navigation}) => {
 
@@ -27,7 +26,7 @@ const CreateAccount = ({navigation}) => {
         locations={[0.65, 0.95]}
         style={AppStyles.flexContainer}
       >
-        <Text style={[AppStyles.textSemiBold, PageStyles.text, {fontSize: 30}]}>Create Account</Text>
+        <Text style={[AppStyles.textSemiBold, pageStyles.text, {fontSize: 30}]}>Create Account</Text>
 
         {/* <FlatList
           data={inputFields}

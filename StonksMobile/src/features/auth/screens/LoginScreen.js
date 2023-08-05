@@ -2,7 +2,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { View, Text, StyleSheet } from "react-native";
 
 import AppStyles from "../../../theme/AppStyles";
-import LoginStyles from "./LoginStyles";
 
 import CustomTextInput from "../../../components/CustomTextInput";
 import CustomBtn from "../../../components/CustomButton";

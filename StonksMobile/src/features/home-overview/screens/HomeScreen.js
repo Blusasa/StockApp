@@ -18,7 +18,7 @@ const HomeScreen = () => {
                     <Text style={[AppStyles.text, styles.balanceHeader]}>YOUR BALANCE</Text>
                     <Text style={[AppStyles.text, styles.balancePrice]}>$10,420.11</Text>
                 </View>
-                <Image style={[styles.img]} source={require("../../assets/test-chart1.png")} />
+                <Image style={[styles.img]} source="../../assets/test-chart1.png"/>
             </View>
         );
     }
