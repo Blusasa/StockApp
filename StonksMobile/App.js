@@ -6,7 +6,7 @@ import {
   Poppins_400Regular, Poppins_700Bold, Poppins_600SemiBold
 } from '@expo-google-fonts/poppins';
 
-import Navigation from './app/navigation/MainAppNavigation';
+import Navigation from './src/navigation/MainAppNavigation';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'react-native';
 
