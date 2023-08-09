@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 
 import {
-  useFonts, Poppins_300Light_Italic,
+  useFonts, Poppins_300Light, Poppins_300Light_Italic,
   Poppins_400Regular, Poppins_700Bold, Poppins_600SemiBold
 } from '@expo-google-fonts/poppins';
 
@@ -12,6 +12,7 @@ import { StatusBar } from 'react-native';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
+    Poppins_300Light,
     Poppins_300Light_Italic,
     Poppins_400Regular,
     Poppins_700Bold,
