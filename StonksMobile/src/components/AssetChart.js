@@ -1,6 +1,8 @@
 import { View } from "react-native";
 import { Grid, LineChart, XAxis, YAxis } from "react-native-svg-charts";
 import AppStyles from "../theme/AppStyles";
+import Svg from "react-native-svg";
+import { Rect } from "react-native-svg";
 
 const AssetChart = ({data, chartHeight}) => {
 
@@ -38,32 +40,15 @@ const data2 = [
   2.12,
 ];  
 
-    const contentInset = { top: 25, left: 20, right: 20, bottom: 25}
-
-    // const yAxis = () => {
-    //     return (
-    //         <YAxis
-    //             data={data2}
-    //             svg={{fill: "#fff", fontSize: 15}}
-    //             formatLabel={(value) => `$${value}`}
-    //             numberOfTicks={5}
-    //             contentInset={contentInset}
-    //         />
-    //     )
-    // };
+    const contentInset = { top: 15, left: 10, right: 10, bottom: 15}
 
     return (
-        <View style={[AppStyles.flexContainer, {flexDirection:"row", maxHeight: "33%", maxWidth: "90%", borderColor: "#fff", borderWidth: 2}]}>
+        <View style={[AppStyles.flexContainer, {flexDirection:"row", maxHeight: "100%", maxWidth: "95%", backgroundColor: "transparent"}]}>
             <LineChart
-                style={{width: "95%"}}
                 data={data2}
                 svg={{stroke: "#E91EAC", strokeWidth: 2}}
                 contentInset={contentInset}
-            >
-                <Grid
-                    svg={{fill: "#fff"}}
-                />
-            </LineChart>
+            />
         </View>
     );
 

@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 
+import AssetChart from "./AssetChart";
 import AppStyles from "../theme/AppStyles";
 import FeatherIcon from "../assets/rneIcons/FeatherIcon";
 
@@ -11,14 +12,15 @@ const StockBox = ({ stockInfo }) => {
     }
 
     return (
-        <View style={StockBoxStyles.boxContainer}>
-            <View style={[StockBoxStyles.infoContainer]}>
+        <View style={[StockBoxStyles.boxContainer]}>
+            <View style={[StockBoxStyles.infoContainer, {marginRight: 10}]}>
                 <Text style={[AppStyles.text, { fontSize: 24, alignSelf: "flex-start" }]}>{stockInfo.name}</Text>
                 <Text style={[AppStyles.text, { color: "grey", fontSize: 18, alignSelf: "flex-start" }]}>{stockInfo.symbol}</Text>
             </View>
-            <View style={StockBoxStyles.pricingContainer}>
-                <Text style={[AppStyles.text, { fontSize: 24 }]}>${round(stockInfo.currentPrice, 2)}</Text>
-                <View style={StockBoxStyles.percentContainer}>
+            <AssetChart />
+            <View style={[StockBoxStyles.pricingContainer, {marginLeft: 10}]}>
+                <Text style={[AppStyles.text, { fontSize: 24, alignSelf: "flex-end" }]}>${round(stockInfo.currentPrice, 2)}</Text>
+                <View style={[StockBoxStyles.percentContainer]}>
                     {
                         stockIsNegative ?
                             <FeatherIcon name={"arrow-down-left"} color={"#ff0000"} size={30} />
@@ -41,27 +43,19 @@ const StockBoxStyles = StyleSheet.create({
         padding: 5,
         backgroundColor: "transparent"
     },
-    shadow : {
-        height: 75,
-        // borderBottomColor: "#E91EAC",
-        // borderRightColor: "#E91EAC",
-        // borderTopColor: "#94126d",
-        // borderLeftColor: "#94126d",
-        // borderWidth: 3,
-        margin: 5
-    },
     infoContainer: {
         flex: 1,
         alignItems: "flex-start",
         alignSelf: "flex-start",
     },
     pricingContainer: {
-        flexShrink: 1,
+        flex: 1,
         justifyContent: "flex-end"
     },
     percentContainer : {
         flexShrink: 1,
         flexDirection: "row",
+        justifyContent: "flex-end",
     },
 });
 
