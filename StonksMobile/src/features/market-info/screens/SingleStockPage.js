@@ -1,7 +1,7 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
 import AppStyles from "../../../theme/AppStyles";
-import AssetChart from "../components/AssetChart";
+import AssetChart from "../../../components/AssetChart";
 
 const SingleStockPage = ({ data }) => {
 
@@ -17,7 +17,10 @@ const SingleStockPage = ({ data }) => {
     }
 
     return (
-        <View style={[AppStyles.flexContainer, AppStyles.mainApp]}>
+        <View style={[AppStyles.flexContainer, AppStyles.mainApp, {borderColor: "#fff", borderWidth: 2}]}>
+            <View>
+                <Text style={[AppStyles.text]}>Stock 1 Price</Text>
+            </View>
             <AssetChart/>
         </View>
     );
