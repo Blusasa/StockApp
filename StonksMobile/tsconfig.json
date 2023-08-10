@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "jsx": "react-jsx",
+    "jsx": "react-native",
     "target": "es6",
     "moduleResolution": "node",
-    "module": "commonjs",
+    "module": "CommonJS",
+    "skipLibCheck": true,
     "declaration": false,
     "noLib": false,
     "emitDecoratorMetadata": true,

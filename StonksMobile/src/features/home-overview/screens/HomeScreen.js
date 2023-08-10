@@ -4,6 +4,8 @@ import AppStyles from "../../../theme/AppStyles";
 
 import CustomTextInput from "../../../components/CustomTextInput";
 import Underline from "../../../components/Underline";
+import AssetChart from "../../../components/AssetChart";
+import NotifBellSVG from "../../../assets/notifBell";
 
 import FavoritedStocks from "../components/FavoritedStocks";
 import DailyMoverContainer from "../components/DailyMoverContainer";
@@ -18,7 +20,9 @@ const HomeScreen = () => {
                     <Text style={[AppStyles.text, styles.balanceHeader]}>YOUR BALANCE</Text>
                     <Text style={[AppStyles.text, styles.balancePrice]}>$10,420.11</Text>
                 </View>
-                <Image style={[styles.img]} source="../../assets/test-chart1.png"/>
+                <View style={[{maxWidth: "40%"}]}>
+                    <AssetChart />
+                </View>
             </View>
         );
     }
@@ -33,9 +37,9 @@ const HomeScreen = () => {
 
             <FlatList
                 ListHeaderComponent={() => (
-                    <View>
+                    <View style={[commonStyles.flexRow, {justifyContent: "space-between"}]}>
                         <CustomTextInput placeholderText={"Search for a Stock"}/>
-                        <Image source={"../assets/notifBell.svg"}/>
+                        <NotifBellSVG />
                     </View>
                 )}
                 ListHeaderComponentStyle={{ width: 350, alignSelf: "center" }}
@@ -57,12 +61,12 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
     balanceContainer: {
-        flexShrink: 1,
+        flex: 1,
         flexDirection: "row",
+        justifyContent: "space-between",
         margin: 10,
-        // marginBottom: 0,
         padding: 10,
-        width: 375
+        width: screenDimensions.width - 20,
     },
     componentContainer: {
         flex: 1,

@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 export const commonStyles = StyleSheet.create({
     flexColumn: {
@@ -17,8 +17,14 @@ export const commonStyles = StyleSheet.create({
         alignSelf: "center"
     },
 
+
     devBorder: {
         borderColor: "#fff",
         borderWidth: 2
     }
 });
+
+export const screenDimensions = {
+    width: Dimensions.get("screen").width,
+    height: Dimensions.get("screen").height,
+}

@@ -1,9 +1,8 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
-import { commonStyles } from "../theme/CommonStyles";
 import FeatherIcon from "../assets/rneIcons/FeatherIcon";
-import { useTheme } from "../theme/useTheme";
-import { Theme } from "../theme/types";
+import { useTheme, Theme, commonStyles } from "../theme";
+import AssetChart from "./AssetChart";
 
 type Props = {
     name: string,
@@ -29,16 +28,16 @@ const StockBox = (stockInfo: Props): JSX.Element => {
 
     return (
         <Pressable
-            style={({pressed}) => [{backgroundColor: pressed ? theme.colors.pressableIn : theme.colors.transparent}, 
-                commonStyles.flexColumn, commonStyles.centerContainer, componentStyles.pressable]}
+            style={({pressed}) => [{backgroundColor: pressed ? theme.colors.pressableIn : theme.colors.transparent}, componentStyles.pressable]}
         >
-            <View style={[commonStyles.flexRow, commonStyles.centerContainer, componentStyles.boxContainer]}>
+            <View style={componentStyles.boxContainer}>
                     <View style={[componentStyles.infoContainer]}>
-                        <Text style={[theme.fonts.regular, componentStyles.stockName]}>{stockInfo.name}</Text>
-                        <Text style={[theme.fonts.subtext, componentStyles.stockBoxSubText]}>{stockInfo.symbol}</Text>
+                        <Text style={[componentStyles.stockName]}>{stockInfo.name}</Text>
+                        <Text style={[componentStyles.stockBoxSubText]}>{stockInfo.symbol}</Text>
                     </View>
+                    <AssetChart />
                     <View style={componentStyles.pricingContainer}>
-                        <Text style={[theme.fonts.regular, componentStyles.stockName]}>${round(stockInfo.currentPrice)}</Text>
+                        <Text style={componentStyles.stockName}>${round(stockInfo.currentPrice)}</Text>
                         <View style={[componentStyles.percentContainer]}>
                             {
                                 stockIsNegative ?
@@ -46,7 +45,7 @@ const StockBox = (stockInfo: Props): JSX.Element => {
                                     : <FeatherIcon name={"arrow-up-right"} color={theme.colors.deltaPositive} size={30} />
                             }
                             <Text 
-                                style={[theme.fonts.subtext, componentStyles.stockBoxSubText, commonStyles.centerSelf,
+                                style={[componentStyles.stockBoxSubText, commonStyles.centerSelf, 
                                 {color: stockIsNegative ? theme.colors.deltaNegative : theme.colors.deltaPositive}]}>
                                     {round(stockInfo.percentChange)}%
                             </Text>
@@ -61,9 +60,14 @@ const stockBoxStyles = (theme: Theme) => {
     return(
         StyleSheet.create({
             pressable: {
+                ...commonStyles.flexColumn,
+                ...commonStyles.centerContainer,
                 margin: 5
             },
             boxContainer: {
+
+                ...commonStyles.flexRow, 
+                ...commonStyles.centerContainer,
                 width: 350,
                 justifyContent: "space-between",
                 padding: 5,
@@ -75,7 +79,7 @@ const stockBoxStyles = (theme: Theme) => {
                 alignSelf: "flex-start",
             },
             pricingContainer: {
-                flexShrink: 1,
+                flex: 1,
                 alignItems: "flex-end",
                 justifyContent: "flex-end"
             },
@@ -84,10 +88,12 @@ const stockBoxStyles = (theme: Theme) => {
                 flexDirection: "row",
             },
             stockName: {
+                ...theme.fonts.regular,
                 fontSize: 24,
                 color: theme.colors.text,
             },
             stockBoxSubText: {
+                ...theme.fonts.subtext,
                 color: "grey", 
                 fontSize: 18, 
                 alignSelf: "flex-start" 
@@ -95,7 +101,6 @@ const stockBoxStyles = (theme: Theme) => {
             pressableIn: {
                 backgroundColor: theme.colors.pressableIn
             }
-
         })
     );
 };

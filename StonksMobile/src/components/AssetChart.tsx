@@ -1,10 +1,8 @@
 import { View } from "react-native";
-import { Grid, LineChart, XAxis, YAxis } from "react-native-svg-charts";
+import { LineChart } from "react-native-svg-charts";
 import AppStyles from "../theme/AppStyles";
-import Svg from "react-native-svg";
-import { Rect } from "react-native-svg";
 
-const AssetChart = ({data, chartHeight}) => {
+const AssetChart = (): JSX.Element => {
 
 const data2 = [
   2.15,
@@ -21,7 +19,7 @@ const data2 = [
   2.04,
   2.09,
   2.17,
-  1.98,
+  1.97,
   2.12,
   2.01,
   2.32,
@@ -40,11 +38,12 @@ const data2 = [
   2.12,
 ];  
 
-    const contentInset = { top: 15, left: 10, right: 10, bottom: 15}
+    const contentInset = { top: 10, left: 10, right: 10, bottom: 10}
 
     return (
         <View style={[AppStyles.flexContainer, {flexDirection:"row", maxHeight: "100%", maxWidth: "95%", backgroundColor: "transparent"}]}>
-            <LineChart
+            <LineChart 
+                style={{width: "100%"}}
                 data={data2}
                 svg={{stroke: "#E91EAC", strokeWidth: 2}}
                 contentInset={contentInset}
