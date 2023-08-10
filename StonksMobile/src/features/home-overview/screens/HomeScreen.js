@@ -4,13 +4,12 @@ import AppStyles from "../../../theme/AppStyles";
 
 import CustomTextInput from "../../../components/CustomTextInput";
 import Underline from "../../../components/Underline";
+import AssetChart from "../../../components/AssetChart";
+import NotifBellSVG from "../../../assets/notifBell";
 
 import FavoritedStocks from "../components/FavoritedStocks";
 import DailyMoverContainer from "../components/DailyMoverContainer";
 import UserGroups from "../components/UserGroups";
-import AssetChart from "../../../components/AssetChart";
-
-import { screenDimensions } from "../../../theme";
 
 const HomeScreen = () => {
 
@@ -38,9 +37,9 @@ const HomeScreen = () => {
 
             <FlatList
                 ListHeaderComponent={() => (
-                    <View>
+                    <View style={[commonStyles.flexRow, {justifyContent: "space-between"}]}>
                         <CustomTextInput placeholderText={"Search for a Stock"}/>
-                        <Image source={"../assets/notifBell.svg"}/>
+                        <NotifBellSVG />
                     </View>
                 )}
                 ListHeaderComponentStyle={{ width: 350, alignSelf: "center" }}

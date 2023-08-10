@@ -11,7 +11,6 @@ const CustomTextInput = ({ placeholderText, styles, hideGradient }) => {
         />
     );
 
-
     const wrappedInGradientInput = (
         <LinearGradient
             content
@@ -25,7 +24,7 @@ const CustomTextInput = ({ placeholderText, styles, hideGradient }) => {
     );
 
     return (
-        <View style={{ flexShrink: 1, margin: 7 }}>
+        <View style={{ flex: 7, margin: 5 }}>
             {hideGradient ? textInputElement : wrappedInGradientInput}
         </View>
     );
