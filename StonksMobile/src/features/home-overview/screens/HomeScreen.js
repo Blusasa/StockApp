@@ -8,6 +8,9 @@ import Underline from "../../../components/Underline";
 import FavoritedStocks from "../components/FavoritedStocks";
 import DailyMoverContainer from "../components/DailyMoverContainer";
 import UserGroups from "../components/UserGroups";
+import AssetChart from "../../../components/AssetChart";
+
+import { screenDimensions } from "../../../theme";
 
 const HomeScreen = () => {
 
@@ -18,7 +21,9 @@ const HomeScreen = () => {
                     <Text style={[AppStyles.text, styles.balanceHeader]}>YOUR BALANCE</Text>
                     <Text style={[AppStyles.text, styles.balancePrice]}>$10,420.11</Text>
                 </View>
-                <Image style={[styles.img]} source="../../assets/test-chart1.png"/>
+                <View style={[{maxWidth: "40%"}]}>
+                    <AssetChart />
+                </View>
             </View>
         );
     }
@@ -57,12 +62,12 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
     balanceContainer: {
-        flexShrink: 1,
+        flex: 1,
         flexDirection: "row",
+        justifyContent: "space-between",
         margin: 10,
-        // marginBottom: 0,
         padding: 10,
-        width: 375
+        width: screenDimensions.width - 20,
     },
     componentContainer: {
         flex: 1,
