@@ -1,9 +1,4 @@
-import { useState } from "react";
-import { LayoutChangeEvent, LayoutRectangle, View } from "react-native";
-import { SvgXml } from "react-native-svg"; 
-import { commonStyles } from "../theme"
-
-const xml = `
+const notifBellXml = `
 <svg xmlns="http://www.w3.org/2000/svg" width="27" height="29" viewBox="0 0 27 29" fill="none">
     <path d="M17.0301 25.0503C17.0301 26.3096 15.7832 27.5822 13.9096 27.5822C12.036 27.5822 10.7891 26.3096 10.7891 25.0503C10.7891 23.7911 12.036 22.5184 13.9096 22.5184C15.7832 22.5184 17.0301 23.7911 17.0301 25.0503Z" stroke="#E91EAC" stroke-width="2"/>
     <mask id="path-2-outside-1_502_22" maskUnits="userSpaceOnUse" x="0" y="0" width="27" height="26" fill="black">
@@ -15,27 +10,4 @@ const xml = `
 </svg>
 `;
 
-const NotifBellSVG = (): JSX.Element => {
-  const [svgSize, setSvgSize] = useState<LayoutRectangle>({
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0
-  });
-
-  if(!svgSize) return;
-
-  const width = svgSize.width * 0.75;
-  const height = svgSize.height * 0.75;
-
-  return(
-    <View style={[commonStyles.flexColumn, commonStyles.centerContainer]}
-      onLayout={(event: LayoutChangeEvent) => setSvgSize(event.nativeEvent.layout)}
-    >
-      <SvgXml xml={xml} width={width} height={height}/>
-    </View>
-  )
-}
-
-export default NotifBellSVG;
-
+export { notifBellXml }
