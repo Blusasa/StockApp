@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, Image, FlatList, useWindowDimensions } from "react-native";
+import { View, Text, StyleSheet, FlatList, ScrollView, useWindowDimensions } from "react-native";
 
 import AppStyles from "../../../theme/AppStyles";
-import { commonStyles } from "../../../theme";
+import { commonStyles, useTheme } from "../../../theme";
 
 import SvgComponent from "../../../assets/SvgComponent";
 import { notifBellXml } from "../../../assets/svgXmls";
@@ -17,62 +17,62 @@ import UserGroups from "../components/UserGroups";
 const HomeScreen = () => {
 
     const {width} = useWindowDimensions();
-    const componentStyles = styles({width});
+    const theme = useTheme();
+    const componentStyles = styles({width, theme});
 
     const BalanceComponent = () => {
         return (
-            <View style={[componentStyles.balanceContainer]}>
-                <View>
-                    <Text style={[AppStyles.text, componentStyles.balanceHeader]}>YOUR BALANCE</Text>
-                    <Text style={[AppStyles.text, componentStyles.balancePrice]}>$10,420.11</Text>
+            <View style={[componentStyles.balanceComponentContainer, commonStyles.devBorder]}>
+                <View style={[componentStyles.balanceInfoContainer]}>
+                    <Text style={[componentStyles.balanceHeader]}>YOUR BALANCE</Text>
+                    <Text style={[componentStyles.balancePrice]}>$10,420.11</Text>
                 </View>
-                <View style={[{maxWidth: "40%"}]}>
-                    <AssetChart />
-                </View>
+                <AssetChart />
             </View>
         );
     }
 
-    let components = [
-        { component: BalanceComponent()},
-        { component: <Underline/> }
-    ]
-
     return (
-        <View style={[AppStyles.flexContainer, AppStyles.mainApp]}>
-
-            <FlatList
-                ListHeaderComponent={() => (
-                    <View style={[commonStyles.flexRow, {justifyContent: "space-between"}]}>
-                        <CustomTextInput placeholderText={"Search for a Stock"}/>
-                        <SvgComponent svgXml={notifBellXml} dimensionMultipliers={{height: 0.75, width: 0.75}} />
-                    </View>
-                )}
-                ListHeaderComponentStyle={{ width: 350, alignSelf: "center" }}
-                data={components}
-                renderItem={({ item }) => item.component}
-                ListFooterComponent={() => (
-                    <View>
-                        <FavoritedStocks />
-                        <Underline/>
-                        <DailyMoverContainer />
-                        <Underline/>
-                        <UserGroups />
-                    </View>
-                )}
-            />
-        </View>
+        <ScrollView contentContainerStyle={[componentStyles.mainContainer, commonStyles.devBorder]}>
+            <View style={[componentStyles.headerContainer, commonStyles.devBorder]}>
+                <CustomTextInput placeholderText={"Search for a Stock"}/>
+                <SvgComponent svgXml={notifBellXml} dimensionMultipliers={{height: 0.75, width: 0.75}} />
+            </View>
+            {BalanceComponent()}
+            <Underline />
+            {/* <FavoritedStocks /> */}
+            <Underline/>
+            {/* <DailyMoverContainer /> */}
+            <Underline/>
+            {/* <UserGroups /> */}
+        </ScrollView>
     );
 };
 
-const styles = ({width, height}) => StyleSheet.create({
-    balanceContainer: {
+const styles = ({width, height, theme}) => StyleSheet.create({
+    mainContainer: {
         flex: 1,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        margin: 10,
+        ...commonStyles.flexColCenter,
+        padding: 15,
+        backgroundColor: theme.colors.background,
+    },
+    headerContainer: {
+        flex: 1,
+        ...commonStyles.flexRowSpaceBW,
+        maxHeight: "10%",
+    },
+    balanceComponentContainer: {
+        ...commonStyles.flexRowSpaceBW,
+        flex: 1,
+        marginTop: 15,
+        marginBottom: 15,
         padding: 10,
-        width: width - 20,
+        maxHeight: "13%",
+    },
+    balanceInfoContainer: {
+        //Asset Chart is flex: 1, so make the info section take up 2/3rds of the box
+        flex: 2,
+        ...commonStyles.flexColEnd,
     },
     componentContainer: {
         flex: 1,
@@ -80,18 +80,13 @@ const styles = ({width, height}) => StyleSheet.create({
     },
     balancePrice: {
         fontSize: 28,
-        alignSelf: "flex-start"
+        alignSelf: "flex-start",
+        ...theme.fonts.regular,
     },
     balanceHeader: {
         fontSize: 14,
         alignSelf: "flex-start",
-        color: "#8e8D8D",
-    },
-    img: {
-        alignSelf: "flex-end",
-
-        //temporary because align self isn't working
-        right: -125
+        ...theme.fonts.subtext,
     }
 })
 
