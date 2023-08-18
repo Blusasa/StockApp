@@ -24,7 +24,8 @@ type FontStyles = {
         | '600'
         | '700'
         | '800'
-        | '900'
+        | '900',
+    color: string,
 }
 
 export type Theme = {

@@ -16,19 +16,23 @@ export const DefaultTheme: Theme = {
     fonts: {
         subtext: {
             fontFamily: "Poppins_300Light",
-            fontWeight: "300"
+            fontWeight: "300",
+            color: "#8e8D8D"
         },
         regular: {
             fontFamily: "Poppins_400Regular",
-            fontWeight: "400"
+            fontWeight: "400",
+            color: "#ffffff"
         },
         header: {
             fontFamily: "Poppins_400Regular",
-            fontWeight: "normal"
+            fontWeight: "normal",
+            color: ""
         },
         title: {
             fontFamily: "Poppins_400Regular",
-            fontWeight: "normal"
+            fontWeight: "normal",
+            color: ""
         },
     }
 }
