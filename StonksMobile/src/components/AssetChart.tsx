@@ -1,6 +1,6 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { LineChart } from "react-native-svg-charts";
-import AppStyles from "../theme/AppStyles";
+import { Theme, commonStyles, useTheme } from "../theme";
 
 const AssetChart = (): JSX.Element => {
 
@@ -38,10 +38,12 @@ const data2 = [
   2.12,
 ];  
 
+    const theme = useTheme();
+    const componentStyles = styles(theme);
     const contentInset = { top: 10, left: 10, right: 10, bottom: 10}
 
     return (
-        <View style={[AppStyles.flexContainer, {flexDirection:"row", maxHeight: "100%", maxWidth: "95%", backgroundColor: "transparent"}]}>
+        <View style={[componentStyles.chartContainer]}>
             <LineChart 
                 style={{width: "100%"}}
                 data={data2}
@@ -51,6 +53,18 @@ const data2 = [
         </View>
     );
 
+}
+
+const styles = (theme: Theme) => {
+    return(
+        StyleSheet.create({
+            chartContainer: {
+                flex: 1,
+                ...commonStyles.flexRowCenter,
+                backgroundColor: theme.colors.transparent,
+            }
+        })
+    )
 }
 
 export default AssetChart;
