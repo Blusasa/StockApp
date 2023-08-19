@@ -2,6 +2,7 @@ type Colors = {
     primary: string,
     background: string,
     highlights: string,
+    action: string,
     transparent: string,
     text: string,
     border: string,

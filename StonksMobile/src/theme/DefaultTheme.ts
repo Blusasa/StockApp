@@ -4,7 +4,8 @@ export const DefaultTheme: Theme = {
     colors: {
         primary: "#E91EAC",
         background: "#160C33",
-        highlights: "",
+        highlights: "#B401FC",
+        action: "#fecb61",
         transparent: "rgba(0,0,0,0)",
         text: "#ffffff",
         border: "",
@@ -25,9 +26,9 @@ export const DefaultTheme: Theme = {
             color: "#ffffff"
         },
         header: {
-            fontFamily: "Poppins_400Regular",
+            fontFamily: "Poppins_600SemiBold",
             fontWeight: "normal",
-            color: ""
+            color: "#ffffff"
         },
         title: {
             fontFamily: "Poppins_400Regular",
