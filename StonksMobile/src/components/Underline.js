@@ -8,9 +8,9 @@ const Underline = () => {
 };
 
 const UnderlineStyle = StyleSheet.create({
-    "underline": {
-        backgroundColor: "#B401FC",
-        height: 3,
+    underline: {
+        borderColor: "#B401FC",
+        borderBottomWidth: 3,
     }
 });
 
