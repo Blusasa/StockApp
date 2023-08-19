@@ -1,23 +1,25 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, LayoutRectangle, LayoutChangeEvent } from "react-native";
+import { useState } from "react";
 
 import FeatherIcon from "../assets/rneIcons/FeatherIcon";
 import { useTheme, Theme, commonStyles } from "../theme";
+import { IStockInfo } from "../types";
 import AssetChart from "./AssetChart";
 
-interface IStockInfo {
-    stockInfo: {
-        name: string,
-        symbol: string,
-        currentPrice: number,
-        percentChange: number
-    }
+type StockBoxProps = {
+    stockInfo: IStockInfo
 }
 
-const StockBox = ({stockInfo}: IStockInfo): JSX.Element => {
+const StockBox = ({stockInfo}: StockBoxProps): JSX.Element => {
+    const [iconContainerSize, setIconContainerSize] = useState<LayoutRectangle>({
+        width: 0,
+        height: 0,
+        x: 0,
+        y: 0
+      });
+
     const theme = useTheme();
     const componentStyles = stockBoxStyles(theme);
-
-    console.log(stockInfo);
 
     let stockIsNegative = stockInfo.percentChange < 0;
 
@@ -37,19 +39,22 @@ const StockBox = ({stockInfo}: IStockInfo): JSX.Element => {
                     <Text style={[componentStyles.stockBoxSubText]}>{stockInfo.symbol}</Text>
                 </View>
                 <AssetChart />
-                <View style={componentStyles.pricingContainer}>
-                    <Text style={componentStyles.stockName}>${round(stockInfo.currentPrice)}</Text>
-                    <View style={[componentStyles.percentContainer, commonStyles.devBorder]}>
-                        {
-                            stockIsNegative ?
-                                <FeatherIcon name={"arrow-down-left"} color={theme.colors.deltaNegative} size={30} />
-                                : <FeatherIcon name={"arrow-up-right"} color={theme.colors.deltaPositive} size={30} />
-                        }
-                        <Text 
-                            style={[componentStyles.stockBoxSubText, commonStyles.centerContainer, 
-                            {color: stockIsNegative ? theme.colors.deltaNegative : theme.colors.deltaPositive}]}>
-                                {round(stockInfo.percentChange)}%
-                        </Text>
+                <View style={[componentStyles.pricingContainer]}>
+                        <Text style={componentStyles.stockName}>${round(stockInfo.currentPrice)}</Text>
+                        <View 
+                            style={[componentStyles.percentContainer]}
+                            onLayout={(e: LayoutChangeEvent) => setIconContainerSize(e.nativeEvent.layout)}
+                        >
+                            {
+                                stockIsNegative ?
+                                    <FeatherIcon name={"arrow-down-left"} color={theme.colors.deltaNegative} size={iconContainerSize.height * 0.85} />
+                                    : <FeatherIcon name={"arrow-up-right"} color={theme.colors.deltaPositive} size={iconContainerSize.height * 0.85} />
+                            }
+                            <Text 
+                                style={[componentStyles.stockBoxSubText, 
+                                {color: stockIsNegative ? theme.colors.deltaNegative : theme.colors.deltaPositive}]}>
+                                    {round(stockInfo.percentChange)}%
+                            </Text>
                     </View>
                 </View>
             </View>
@@ -61,35 +66,38 @@ const stockBoxStyles = (theme: Theme) => {
     return(
         StyleSheet.create({
             pressable: {
+                flex: 1,
                 ...commonStyles.flexColCenter,
+                borderRadius: 10,
                 margin: 5
             },
             boxContainer: {
-                ...commonStyles.flexRowCenter,
-                ...commonStyles.devBorder,
-                width: 350,
-                justifyContent: "space-between",
+                flex: 1,
+                ...commonStyles.flexRowSpaceBW,
                 padding: 5,
                 backgroundColor: theme.colors.transparent
             },
             infoContainer: {
-                ...commonStyles.flexColumn
+                flex: 1,
+                ...commonStyles.flexColCenter,
             },
             pricingContainer: {
+                flex: 1,
                 ...commonStyles.flexColCenterCrossEnd
             },
             percentContainer : {
-                ...commonStyles.flexRowEnd
+                flexShrink: 1,
+                ...commonStyles.flexRowEndCrossCenter,
             },
             stockName: {
                 ...theme.fonts.regular,
-                fontSize: 24,
-                color: theme.colors.text,
+                fontSize: 18,
+                includeFontPadding: false,
             },
             stockBoxSubText: {
                 ...theme.fonts.subtext,
-                color: "grey", 
                 fontSize: 18, 
+                includeFontPadding: false,
             },
             pressableIn: {
                 backgroundColor: theme.colors.pressableIn

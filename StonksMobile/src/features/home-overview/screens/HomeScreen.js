@@ -40,10 +40,10 @@ const HomeScreen = () => {
             </View>
             {BalanceComponent()}
             <Underline />
-            {/* <FavoritedStocks /> */}
+            <FavoritedStocks />
             <Underline/>
             {/* <DailyMoverContainer /> */}
-            <Underline/>
+            {/* <Underline/> */}
             {/* <UserGroups /> */}
         </ScrollView>
     );
@@ -64,8 +64,8 @@ const styles = ({width, height, theme}) => StyleSheet.create({
     balanceComponentContainer: {
         ...commonStyles.flexRowSpaceBW,
         flex: 1,
-        marginTop: 15,
-        marginBottom: 15,
+        marginTop: 10,
+        marginBottom: 10,
         padding: 10,
         maxHeight: "13%",
     },
