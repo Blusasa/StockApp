@@ -56,9 +56,17 @@ export const commonStyles = StyleSheet.create({
 
 
     //there is no flexColStart because flex-start is the default position of a column flex container
+    flexColFullCenter: {
+        ...flexColumn,
+        ...centerContainer,
+    },
+    flexRowFullCenter: {
+        ...flexRow,
+        ...centerContainer,
+    },
     flexColCenter: {
         ...flexColumn,
-        ...centerContainer
+        ...justifyCenter,
     },
     flexColEnd: {
         ...flexColumn,
@@ -82,7 +90,13 @@ export const commonStyles = StyleSheet.create({
     },
     flexColCenterCrossEnd: {
         ...flexColumn,
+        ...justifyCenter,
         ...alignEnd
+    },
+    flexRowEndCrossCenter: {
+        ...flexRow,
+        ...justifyEnd,
+        ...alignCenter,
     },
 
     devBorder: {
