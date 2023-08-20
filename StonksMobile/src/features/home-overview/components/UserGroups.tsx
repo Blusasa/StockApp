@@ -1,8 +1,14 @@
 import { View, Text, StyleSheet } from "react-native";
-import AppStyles from "../../../theme/AppStyles";
-import GroupBox from "./GroupBox";
+import { ReactElement } from "react";
 
-const UserGroups = () => {
+import GroupBox from "./GroupBox";
+import { Theme, commonStyles, useTheme } from "../../../theme";
+import { GroupInfo } from "../types/GroupInfoProps";
+
+const UserGroups = () : ReactElement => {
+
+    const theme = useTheme();
+    const componentStyles = styles(theme);
 
     const DATA = [
         {
@@ -38,22 +44,28 @@ const UserGroups = () => {
       ];
 
     return (
-        <View style={[AppStyles.flexContainer, AppStyles.componentContainerBackground, styles.container]}>
-            <Text style={[AppStyles.text, AppStyles.componentHeader, styles.header]}>Group</Text>
-            {DATA.map((value, index) => (
-              <GroupBox groupInfo={value} key={index}/>
-            ))}
-        </View>
+      <View style={[componentStyles.container, commonStyles.devBorder]}>
+          <Text style={[componentStyles.header]}>Group</Text>
+          {DATA.map((value : GroupInfo, index : number) => (
+            <GroupBox groupInfo={value} key={index}/>
+          ))}
+      </View>
     )
 };
 
-const styles = StyleSheet.create({
+const styles = (theme : Theme) => StyleSheet.create({
   container: {
-    margin: 10,
+    flex: 1,
+    ...commonStyles.flexColCenter,
+    marginTop: 10,
+    marginBottom: 10,
     padding: 10,
   },
   header:{
-    left: 5
+    ...theme.fonts.header,
+    fontSize: 22,
+    left: 5,
+    alignSelf: "flex-start"
   }
   
 });
