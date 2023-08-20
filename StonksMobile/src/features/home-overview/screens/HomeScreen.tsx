@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, FlatList, ScrollView, useWindowDimensions } from "react-native";
+import { View, Text, StyleSheet, ScrollView} from "react-native";
+import { ReactElement } from "react";
 
-import AppStyles from "../../../theme/AppStyles";
-import { commonStyles, useTheme } from "../../../theme";
+import { commonStyles, useTheme, Theme } from "../../../theme";
 
 import SvgComponent from "../../../assets/SvgComponent";
 import { notifBellXml } from "../../../assets/svgXmls";
@@ -14,15 +14,14 @@ import FavoritedStocks from "../components/FavoritedStocks";
 import DailyMoverContainer from "../components/DailyMoverContainer";
 import UserGroups from "../components/UserGroups";
 
-const HomeScreen = () => {
+const HomeScreen = () : ReactElement => {
 
-    const {width} = useWindowDimensions();
     const theme = useTheme();
-    const componentStyles = styles({width, theme});
+    const componentStyles = styles(theme);
 
     const BalanceComponent = () => {
         return (
-            <View style={[componentStyles.balanceComponentContainer, commonStyles.devBorder]}>
+            <View style={[componentStyles.balanceComponentContainer]}>
                 <View style={[componentStyles.balanceInfoContainer]}>
                     <Text style={[componentStyles.balanceHeader]}>YOUR BALANCE</Text>
                     <Text style={[componentStyles.balancePrice]}>$10,420.11</Text>
@@ -33,25 +32,25 @@ const HomeScreen = () => {
     }
 
     return (
-        <ScrollView contentContainerStyle={[componentStyles.mainContainer, commonStyles.devBorder]}>
+        <ScrollView contentContainerStyle={[componentStyles.mainContainer]}>
             <View style={[componentStyles.headerContainer, commonStyles.devBorder]}>
-                <CustomTextInput placeholderText={"Search for a Stock"}/>
+                <CustomTextInput placeholderText={"Search for a Stock"} styles={undefined} hideGradient={undefined}/>
                 <SvgComponent svgXml={notifBellXml} dimensionMultipliers={{height: 0.75, width: 0.75}} />
             </View>
             {BalanceComponent()}
             <Underline />
             <FavoritedStocks />
             <Underline/>
-            {/* <DailyMoverContainer /> */}
-            {/* <Underline/> */}
-            {/* <UserGroups /> */}
+            <DailyMoverContainer />
+            <Underline/>
+            <UserGroups />
         </ScrollView>
     );
 };
 
-const styles = ({width, height, theme}) => StyleSheet.create({
+const styles = (theme : Theme) => StyleSheet.create({
     mainContainer: {
-        flex: 1,
+        flexGrow: 1,
         ...commonStyles.flexColCenter,
         padding: 15,
         backgroundColor: theme.colors.background,
