@@ -24,4 +24,5 @@ const styles = (theme: Theme) => StyleSheet.create({
         ...theme.fonts.header
     }
 });
+
 export default Groups;
