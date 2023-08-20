@@ -1,18 +1,18 @@
 import { View, Text, StyleSheet } from "react-native";
 import { ReactElement } from "react";
 
-import { Theme, useTheme, commonStyles } from "../../../theme";
+import { useTheme, commonStyles, Theme } from "../../../theme";
 
-const UserAssets = () : ReactElement => {
+const Groups = () : ReactElement => {
     const theme = useTheme();
     const componentStyles = styles(theme);
-
-    return (
-        <View style={[componentStyles.mainContainer]}>
-            <Text style={[componentStyles.title]}>My Assets</Text>
+    
+    return(    
+        <View style ={[componentStyles.mainContainer]}>
+            <Text style={[componentStyles.title]}>My Groups</Text>    
         </View>
     );
-}
+};
 
 const styles = (theme: Theme) => StyleSheet.create({
     mainContainer: {
@@ -24,5 +24,4 @@ const styles = (theme: Theme) => StyleSheet.create({
         ...theme.fonts.header
     }
 });
-
-export default UserAssets;
+export default Groups;
