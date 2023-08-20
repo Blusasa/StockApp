@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 
 import { Theme, useTheme, commonStyles } from "../../../theme";
-import AppStyles from "../../../theme/AppStyles";
 import AssetChart from "../../../components/AssetChart";
 
 const SingleStockPage = () => {
