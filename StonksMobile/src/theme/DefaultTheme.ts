@@ -31,9 +31,9 @@ export const DefaultTheme: Theme = {
             color: "#ffffff"
         },
         title: {
-            fontFamily: "Poppins_400Regular",
+            fontFamily: "Poppins_600SemiBold",
             fontWeight: "normal",
-            color: ""
+            color: "#ffffff"
         },
     }
 }

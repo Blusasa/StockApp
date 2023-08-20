@@ -1,32 +1,44 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 
+import {commonStyles, useTheme } from "../../../theme";
+
 import CustomBtn from "../../../components/CustomButton";
-import AppStyles from "../../../theme/AppStyles";
 
 
-const FrontPage = ({ navigation }) => {
+const FrontPage = ({navigation}) => {
+    const [containerSize, setContainerSize] = useState({
+        width: 0,
+        height: 0,
+        x: 0,
+        y: 0
+      });
+
+    const theme = useTheme();
+    const componentStyles = styles(theme, containerSize.height);
 
     const directToLoginPage = useCallback(() => {
         navigation.navigate("LoginScreen");
-    });
+    }, []);
 
     const directToCreateAccount = useCallback(() => {
         navigation.navigate("CreateAccount");
-    });
+    }, []);
 
     return (
         <LinearGradient
-            colors={['#B401FC', '#E91EAC']}
+            colors={[theme.colors.highlights, theme.colors.primary]}
             locations={[0.65, 0.95]}
-            style={AppStyles.flexContainer}
+            style={[componentStyles.mainContainer, commonStyles.devBorder]}
+            onLayout={(e) => setContainerSize(e.nativeEvent.layout)}
         >
-            <View style={AppStyles.flexContainer}></View>
-            <Text style={[AppStyles.textSemiBold, FrontPageStyles.text]}>STONKS</Text>
-            <View style={AppStyles.flexContainer}></View>
+            {/* empty views are set to place the Text component roughly where I want it in each screen until I find a better way */}
+            <View style={{flex: 1}}></View>
+            <Text style={[componentStyles.text]}>STONKS</Text>
+            <View style={{flex: 2}}></View>
 
-            <View style={FrontPageStyles.btnContainer}>
+            <View style={componentStyles.btnContainer}>
                 <CustomBtn text={"LOGIN"} styles={{ width: 300 }} onPress={directToLoginPage} />
                 <CustomBtn text={"CREATE ACCOUNT"} styles={{ width: 300 }} onPress={directToCreateAccount} />
             </View>
@@ -35,17 +47,19 @@ const FrontPage = ({ navigation }) => {
     );
 };
 
-const FrontPageStyles = StyleSheet.create({
+const styles = (theme, height) => StyleSheet.create({
+    mainContainer: {
+        flex: 1,
+        ...commonStyles.flexColFullCenter,
+    },
     text: {
+        ...theme.fonts.title,
         fontSize: 70,
-        textShadowColor: "#000000",
-        textShadowOffset: { width: 5, height: 5},
-        elevation: 5
     },
     btnContainer : { 
-        flex: 1, 
-        justifyContent: "flex-end", 
-        marginBottom: 50 
+        flex: 1,
+        ...commonStyles.flexColEnd, 
+        marginBottom: height * 0.06, 
     }
 });
 
