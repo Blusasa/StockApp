@@ -67,7 +67,7 @@ const styles = (theme : Theme) => StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     padding: 10,
-    maxHeight: "60%",
+    // maxHeight: "60%",
   },
   header: {
     ...theme.fonts.header,
@@ -77,11 +77,11 @@ const styles = (theme : Theme) => StyleSheet.create({
     alignSelf: "flex-start"
   },
   button: {
-    width: "100%",
-    height: 30,
-    margin: 5,
+    height: "10%",
+    marginVertical: 10,
+    marginHorizontal: 5,
     backgroundColor: theme.colors.action,
-    borderRadius: 7,
+    borderRadius: 8,
     justifyContent: "center",
   },
   buttonTxt: {
