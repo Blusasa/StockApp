@@ -1,16 +1,13 @@
 import { View, Text, StyleSheet, Pressable, LayoutRectangle, LayoutChangeEvent } from "react-native";
 import { useState } from "react";
 
-import FeatherIcon from "../assets/rneIcons/FeatherIcon";
-import { useTheme, Theme, commonStyles } from "../theme";
-import { IStockInfo } from "../types";
-import AssetChart from "./AssetChart";
+import FeatherIcon from "../../../assets/rneIcons/FeatherIcon";
+import { useTheme, Theme, commonStyles } from "../../../theme";
 
-type StockBoxProps = {
-    stockInfo: IStockInfo
-}
+import StockInfoProps from "../types/StockInfoProps";
+import AssetChart from "../../../components/AssetChart";
 
-const StockBox = ({stockInfo}: StockBoxProps): JSX.Element => {
+const StockBox = ({stockInfo}: StockInfoProps): JSX.Element => {
     const [iconContainerSize, setIconContainerSize] = useState<LayoutRectangle>({
         width: 0,
         height: 0,

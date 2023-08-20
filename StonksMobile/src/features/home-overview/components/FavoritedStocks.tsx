@@ -1,8 +1,7 @@
 import { useState, useEffect, ReactElement } from "react";
 import { View, ActivityIndicator, StyleSheet, Pressable, Text} from "react-native";
 
-import StockBox from "../../../components/StockBox";
-import AppStyles from "../../../theme/AppStyles";
+import StockBox from "./StockBox";
 import { Theme, commonStyles, useTheme } from "../../../theme";
 import { IStockInfo } from "../../../types";
 
