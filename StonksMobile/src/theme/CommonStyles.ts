@@ -1,8 +1,5 @@
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from "react-native";
 
-type Styles = ViewStyle | TextStyle | ImageStyle;
-
-
 //The base common style sheet works on an atomic system where all the "const xxxStyle" are atomic styles that the stylesheet will then use to build 
 //generic, common 'molecular' styles
 
@@ -13,40 +10,40 @@ const AxisDirections = ["flex-start", "center", "flex-end"]
 // ALL start with 'flex'for responsiveness
 // flex + 'direction of container' + position of main axis + Cross + optional postion of cross axis
 
-const flexColumn : Styles = {
+const flexColumn : ViewStyle = {
     flexDirection: "column"
 };
 
-const centerContainer : Styles = {
+const centerContainer : ViewStyle = {
     justifyContent: "center",
     alignItems: "center"
 }
 
-const justifyEnd : Styles = {
+const justifyEnd : ViewStyle = {
     justifyContent: "flex-end"
 }
 
-const flexRow : Styles = {
+const flexRow : ViewStyle = {
     flexDirection: "row"
 }
 
-const justifyCenter : Styles = {
+const justifyCenter : ViewStyle = {
     justifyContent: "center"
 }
 
-const justifySpaceBW : Styles = {
+const justifySpaceBW : ViewStyle = {
     justifyContent: "space-between"
 }
 
-const alignCenter : Styles = {
+const alignCenter : ViewStyle = {
     alignItems: "center"
 }
 
-const alignStart : Styles = {
+const alignStart : ViewStyle = {
     alignItems: "flex-start"
 }
 
-const alignEnd : Styles = {
+const alignEnd : ViewStyle = {
     alignItems : "flex-end"
 }
 
