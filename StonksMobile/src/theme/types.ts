@@ -2,6 +2,7 @@ type Colors = {
     primary: string,
     background: string,
     highlights: string,
+    action: string,
     transparent: string,
     text: string,
     border: string,
@@ -24,7 +25,8 @@ type FontStyles = {
         | '600'
         | '700'
         | '800'
-        | '900'
+        | '900',
+    color: string,
 }
 
 export type Theme = {

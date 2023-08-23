@@ -1,8 +1,15 @@
 import React from "react";
-import { TextInput, StyleSheet, View } from "react-native";
+import { TextInput, StyleSheet, View, ViewStyle, TextStyle } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-const CustomTextInput = ({ placeholderText, styles, hideGradient }) => {
+export type CustomInputProps = {
+    placeholderText: string,
+    styles: ViewStyle | TextStyle,
+    hideGradient: boolean
+}
+
+const CustomTextInput = ({ placeholderText, styles, hideGradient }: CustomInputProps) => {
+
     const textInputElement = (
         <TextInput
             style={[InputStyles(styles).textInputBox]}
@@ -13,11 +20,10 @@ const CustomTextInput = ({ placeholderText, styles, hideGradient }) => {
 
     const wrappedInGradientInput = (
         <LinearGradient
-            content
             colors={['#B401FC', '#E91EAC']}
             start={{ x: 0, y: 1 }}
             end={{ x: 1, y: 0 }}
-            style={[InputStyles().gradientStyle]}
+            style={[InputStyles(styles).gradientStyle]}
         >
             {textInputElement}
         </LinearGradient>
@@ -31,7 +37,7 @@ const CustomTextInput = ({ placeholderText, styles, hideGradient }) => {
 };
 
 
-const InputStyles = (styles) => StyleSheet.create({
+const InputStyles = (styles: ViewStyle | TextStyle) => StyleSheet.create({
     gradientStyle: {
         justifyContent: "center",
         alignContent: "center",
