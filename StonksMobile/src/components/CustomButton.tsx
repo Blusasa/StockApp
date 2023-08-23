@@ -1,29 +1,38 @@
 import { useState } from "react";
-import { Pressable, Text, StyleSheet } from "react-native";
+import { Pressable, Text, StyleSheet, ViewStyle, TextStyle, GestureResponderEvent } from "react-native";
 
-import AppStyles from "../theme/AppStyles";
+import { Theme, useTheme } from "../theme";
 
-const CustomBtn = ({ text, styles, onPress}) => {
+export type CustomBtnProps = {
+    text: string,
+    styles: ViewStyle | TextStyle,
+    onPress: (event: GestureResponderEvent) => void
+}
 
+const CustomBtn = ({text, styles, onPress}: CustomBtnProps) => {
     const [isPressed, setIsPressed] = useState(false);
+
+    const theme = useTheme();
+    const btnStyles = btnRegStyles(theme);
+    const btnPressedStyles = btnPressed(theme);
 
     const handlePressIn = () => setIsPressed(true);
     const handlePressOut = () => setIsPressed(false);
 
     return (
         <Pressable
-            style={[isPressed ? btnPressed.btnPressed : btnStyle.button, styles]}
+            style={[isPressed ? btnPressedStyles.btnPressed : btnStyles.button, styles]}
             onPress={onPress}
             onPressIn={handlePressIn}
             onLongPress={handlePressIn}
             onPressOut={handlePressOut}
         >
-            <Text style={[AppStyles.textSemiBold, isPressed ? btnPressed.btnTextPressed : btnStyle.btnText]}>{text}</Text>
+            <Text style={[btnStyles.btnText, isPressed ? btnPressedStyles.btnTextPressed : btnStyles.btnText]}>{text}</Text>
         </Pressable>
     );
 };
 
-const btnStyle = StyleSheet.create({
+const btnRegStyles = (theme: Theme) => StyleSheet.create({
     button: {
         height: 50,
         margin: 5,
@@ -40,6 +49,7 @@ const btnStyle = StyleSheet.create({
         elevation: 5
     },
     btnText: {
+        ...theme.fonts.header,
         color: "#000000",
         fontSize: 20
     },
@@ -48,9 +58,9 @@ const btnStyle = StyleSheet.create({
     }
 });
 
-const btnPressed = StyleSheet.create({
+const btnPressed = (theme: Theme) => StyleSheet.create({
     btnPressed: {
-        ...btnStyle.button,
+        ...btnRegStyles(theme).button,
         backgroundColor: "#2A7D23",
         shadowColor: "grey",
         shadowOffset: { width: 5, height: 5},
@@ -61,9 +71,9 @@ const btnPressed = StyleSheet.create({
         borderWidth: 2
     },
     btnTextPressed: {
-        ...btnStyle.btnText,
+        ...btnRegStyles(theme).btnText,
         color: "white"
     }
-})
+});
 
 export default CustomBtn;
