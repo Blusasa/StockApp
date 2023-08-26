@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Pressable, LayoutRectangle, LayoutChangeEvent } from "react-native";
 import { useState } from "react";
 
-import FeatherIcon from "../../../assets/rneIcons/FeatherIcon";
+import ArrowIcon from "../../../assets/rneIcons/ArrowIcon";
 import { useTheme, Theme, commonStyles } from "../../../theme";
 
 import StockInfoProps from "../types/StockInfoProps";
@@ -18,7 +18,7 @@ const StockBox = ({stockInfo}: StockInfoProps): JSX.Element => {
     const theme = useTheme();
     const componentStyles = stockBoxStyles(theme);
 
-    let stockIsNegative = stockInfo.percentChange < 0;
+    let stockIsPositive = stockInfo.percentChange > 0;
 
     function round(value: number, decimals: number = 2): string {
         const precision = Math.pow(10, decimals)
@@ -42,14 +42,10 @@ const StockBox = ({stockInfo}: StockInfoProps): JSX.Element => {
                             style={[componentStyles.percentContainer]}
                             onLayout={(e: LayoutChangeEvent) => setIconContainerSize(e.nativeEvent.layout)}
                         >
-                            {
-                                stockIsNegative ?
-                                    <FeatherIcon name={"arrow-down-left"} color={theme.colors.deltaNegative} size={iconContainerSize.height * 0.85} />
-                                    : <FeatherIcon name={"arrow-up-right"} color={theme.colors.deltaPositive} size={iconContainerSize.height * 0.85} />
-                            }
+                            <ArrowIcon isPositive={stockIsPositive} size={iconContainerSize.height * 0.85} />
                             <Text 
                                 style={[componentStyles.stockBoxSubText, 
-                                {color: stockIsNegative ? theme.colors.deltaNegative : theme.colors.deltaPositive}]}>
+                                {color: stockIsPositive ? theme.colors.deltaPositive : theme.colors.deltaNegative}]}>
                                     {round(stockInfo.percentChange)}%
                             </Text>
                     </View>

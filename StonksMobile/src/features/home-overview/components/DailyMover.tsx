@@ -3,7 +3,7 @@ import { ReactElement, useState } from "react";
 
 import { Theme, commonStyles, useTheme } from "../../../theme";
 
-import FeatherIcon from "../../../assets/rneIcons/FeatherIcon";
+import FeatherIcon from "../../../assets/rneIcons/ArrowIcon";
 import StockInfoProps from "../types/StockInfoProps";
 
 
@@ -28,7 +28,6 @@ const DailyMover = ({stockInfo} : StockInfoProps) : ReactElement => {
 
     return (
         <Pressable 
-            onPress={(e) => console.log(`${stockInfo.symbol} pressed`)}
             style={({ pressed }) => [{ backgroundColor: pressed ? theme.colors.pressableIn : "#rgba(191, 191, 191, 0.15)"}, componentStyles.container]}
         >
                 <Text style={[componentStyles.symbol]}>{stockInfo.symbol}</Text>
