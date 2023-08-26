@@ -1,8 +1,10 @@
+import { ReactElement } from "react";
 import { StyleSheet, View } from "react-native";
 import { LineChart } from "react-native-svg-charts";
+
 import { Theme, commonStyles, useTheme } from "../theme";
 
-const AssetChart = (): JSX.Element => {
+const AssetChart = (): ReactElement => {
 
 const data2 = [
   2.15,
@@ -40,10 +42,10 @@ const data2 = [
 
     const theme = useTheme();
     const componentStyles = styles(theme);
-    const contentInset = { top: 10, left: 10, right: 10, bottom: 10}
+    const contentInset = { top: 15, left: 15, right: 15, bottom: 15}
 
     return (
-        <View style={[componentStyles.chartContainer]}>
+        <View style={[componentStyles.chartContainer, commonStyles.devBorder]}>
             <LineChart 
                 style={{width: "100%"}}
                 data={data2}
