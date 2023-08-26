@@ -67,7 +67,6 @@ const styles = (theme : Theme) => StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     padding: 10,
-    // maxHeight: "60%",
   },
   header: {
     ...theme.fonts.header,
