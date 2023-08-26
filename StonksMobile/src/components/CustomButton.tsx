@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Pressable, Text, StyleSheet, ViewStyle, TextStyle, GestureResponderEvent } from "react-native";
 
-import { Theme, useTheme } from "../theme";
+import { Theme, commonStyles, useTheme } from "../theme";
 
 export type CustomBtnProps = {
     text: string,
-    styles: ViewStyle | TextStyle,
+    styles?: ViewStyle | TextStyle | ViewStyle[],
     onPress: (event: GestureResponderEvent) => void
 }
 
@@ -13,54 +13,49 @@ const CustomBtn = ({text, styles, onPress}: CustomBtnProps) => {
     const [isPressed, setIsPressed] = useState(false);
 
     const theme = useTheme();
-    const btnStyles = btnRegStyles(theme);
-    const btnPressedStyles = btnPressed(theme);
+    const componentStyles = btnStyles(theme);
 
     const handlePressIn = () => setIsPressed(true);
     const handlePressOut = () => setIsPressed(false);
 
     return (
         <Pressable
-            style={[isPressed ? btnPressedStyles.btnPressed : btnStyles.button, styles]}
+            style={({pressed}) => [pressed ? componentStyles.buttonPressed : componentStyles.buttonResting, styles, commonStyles.devBorder]}
             onPress={onPress}
             onPressIn={handlePressIn}
             onLongPress={handlePressIn}
             onPressOut={handlePressOut}
         >
-            <Text style={[btnStyles.btnText, isPressed ? btnPressedStyles.btnTextPressed : btnStyles.btnText]}>{text}</Text>
+            <Text style={[componentStyles.btnText, isPressed && componentStyles.btnTextPressed]}>{text}</Text>
         </Pressable>
     );
 };
 
-const btnRegStyles = (theme: Theme) => StyleSheet.create({
-    button: {
-        height: 50,
-        margin: 5,
-        padding: 10,
-        borderRadius: 25,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#54EF46",
-        borderWidth: 2,
-        borderStyle: "solid",
-        borderColor: "black",
-        shadowColor: "#000000",
-        shadowOffset: {width: 0, height: 4},
-        elevation: 5
-    },
-    btnText: {
-        ...theme.fonts.header,
-        color: "#000000",
-        fontSize: 20
-    },
-    shadowComponent : {
-        backgroundColor: "transparent",
-    }
+const buttonResting: ViewStyle = {
+    flex: 1,
+    // margin: 5,
+    // padding: 10,
+    borderRadius: 25,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#54EF46",
+    borderWidth: 2,
+    borderStyle: "solid",
+    borderColor: "black",
+};
+
+const btnText = (theme: Theme): TextStyle => ({
+    ...theme.fonts.header,
+    color: "#000000",
+    fontSize: 20
 });
 
-const btnPressed = (theme: Theme) => StyleSheet.create({
-    btnPressed: {
-        ...btnRegStyles(theme).button,
+const btnStyles = (theme: Theme) => StyleSheet.create({
+    buttonResting: {
+        ...buttonResting
+    },
+    buttonPressed: {
+        ...buttonResting,
         backgroundColor: "#2A7D23",
         shadowColor: "grey",
         shadowOffset: { width: 5, height: 5},
@@ -70,9 +65,15 @@ const btnPressed = (theme: Theme) => StyleSheet.create({
         borderStyle: "solid",
         borderWidth: 2
     },
+    btnText: {
+        ...btnText(theme),
+    },
     btnTextPressed: {
-        ...btnRegStyles(theme).btnText,
+        ...btnText(theme),
         color: "white"
+    },
+    shadowComponent : {
+        backgroundColor: "transparent",
     }
 });
 
