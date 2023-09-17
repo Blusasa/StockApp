@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView} from "react-native";
+import { View, Text, StyleSheet, ScrollView, Dimensions} from "react-native";
 import { ReactElement } from "react";
 
 import { commonStyles, useTheme, Theme } from "../../../theme";
@@ -13,13 +13,14 @@ import AssetChart from "../../../components/AssetChart";
 import FavoritedStocks from "../components/FavoritedStocks";
 import DailyMoverContainer from "../components/DailyMoverContainer";
 import UserGroups from "../components/UserGroups";
+import useContainerSize from "../../../hooks/useContainerSize";
 
 const HomeScreen = () : ReactElement => {
 
     const theme = useTheme();
     const componentStyles = styles(theme);
 
-    const BalanceComponent = () => {
+    const BalanceComponent = (): ReactElement => {
         return (
             <View style={[componentStyles.balanceComponentContainer]}>
                 <View style={[componentStyles.balanceInfoContainer]}>
@@ -29,12 +30,12 @@ const HomeScreen = () : ReactElement => {
                 <AssetChart />
             </View>
         );
-    }
+    };
 
     return (
         <ScrollView contentContainerStyle={[componentStyles.mainContainer]}>
             <View style={[componentStyles.headerContainer, commonStyles.devBorder]}>
-                <CustomTextInput placeholderText={"Search for a Stock"} styles={undefined} hideGradient={undefined}/>
+                <CustomTextInput placeholderText={"Search for a Stock"}/>
                 <SvgComponent svgXml={notifBellXml} dimensionMultipliers={{height: 0.75, width: 0.75}} />
             </View>
             {BalanceComponent()}
@@ -66,7 +67,7 @@ const styles = (theme : Theme) => StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
         padding: 10,
-        maxHeight: "13%",
+        maxHeight: "13%"
     },
     balanceInfoContainer: {
         //Asset Chart is flex: 1, so make the info section take up 2/3rds of the box

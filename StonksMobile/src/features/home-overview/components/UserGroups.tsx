@@ -44,7 +44,7 @@ const UserGroups = () : ReactElement => {
       ];
 
     return (
-      <View style={[componentStyles.container, commonStyles.devBorder]}>
+      <View style={[componentStyles.container]}>
           <Text style={[componentStyles.header]}>Group</Text>
           {DATA.map((value : GroupInfo, index : number) => (
             <GroupBox groupInfo={value} key={index}/>

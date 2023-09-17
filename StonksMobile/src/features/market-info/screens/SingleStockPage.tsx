@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, LayoutChangeEvent} from "react-native";
-import { Fragment} from "react";
+import { View, Text, ScrollView, Dimensions, LayoutChangeEvent} from "react-native";
+import { useState } from "react";
 
 import { Theme, commonStyles } from "../../../theme";
 import { useThemedStyles, ThemedStyles } from "../../../hooks/useThemedStyles";
@@ -9,11 +9,15 @@ import AssetChart from "../../../components/AssetChart";
 import CustomBtn from "../../../components/CustomButton";
 import Underline from "../../../components/Underline";
 import ArrowIcon from "../../../assets/rneIcons/ArrowIcon";
+import StockBalance from "../components/StockBalance";
+import NewsSection from "../components/NewsSection";
+import Description from "../components/Description";
+import Ratings from "../components/RatingsArea";
 
 const SingleStockPage = () => {
     const componentStyles = useThemedStyles(styles);
-    const [mainWidth, mainHeight, setMainContainerSize] = useContainerSize();
-    const [iconWidth, iconHeight, setIconContainerSize] = useContainerSize();
+    const {width: mainWidth, setter: setMainContainerSize} = useContainerSize();
+    const {height: iconHeight, setter: setIconContainerSize} = useContainerSize();
 
     const fakeData = {
         "marketCap": 10.39,
@@ -27,7 +31,7 @@ const SingleStockPage = () => {
     }
 
     return (
-        <View style={[{flex: 1,}]}>
+        <>
             <ScrollView 
                 onLayout={(e: LayoutChangeEvent) => setMainContainerSize(e.nativeEvent.layout)}
                 contentContainerStyle={[componentStyles.mainContainer, commonStyles.devBorder]}
@@ -40,54 +44,48 @@ const SingleStockPage = () => {
                         style={[componentStyles.priceDeltaContainer]}
                         onLayout={(e: LayoutChangeEvent) => setIconContainerSize(e.nativeEvent.layout)}
                     >
-                        <ArrowIcon isPositive size={iconHeight * 0.85} />
+                        <ArrowIcon isPositive size={iconHeight * 0.55} />
                         <Text style={[componentStyles.priceDelta, true ? componentStyles.positive : componentStyles.negative]}>$0.05 {`(2.1%)`}</Text>
                     </View>
-                </View>
-                <AssetChart/>
-                <View style={[componentStyles.sectionContainer]}>
-                    <Text style={[componentStyles.stockName]}>Your Balance {'>'}</Text>
-                    <Text style={[componentStyles.stockName]}>Your Balance {'>'}</Text>
-                    <Text style={[componentStyles.stockName]}>Your Balance {'>'}</Text>
-                    <Text style={[componentStyles.stockName]}>Your Balance {'>'}</Text>
-                    <Text style={[componentStyles.stockName]}>Your Balance {'>'}</Text>
-                    <Text style={[componentStyles.stockName]}>Your Balance {'>'}</Text>
-                    <Text style={[componentStyles.stockName]}>Your Balance {'>'}</Text>
-                    <Text style={[componentStyles.stockName]}>Your Balance {'>'}</Text>
-                    <Text style={[componentStyles.stockName]}>Your Balance {'>'}</Text>
-                    <Text style={[componentStyles.stockName]}>Your Balance {'>'}</Text>
-                    <Text style={[componentStyles.stockName]}>Your Balance {'>'}</Text>
-                    <Text style={[componentStyles.stockName]}>Your Balance {'>'}</Text>
-                    <Text style={[componentStyles.stockName]}>Your Balance {'>'}</Text>
-                    <Text style={[componentStyles.stockName]}>Your Balance {'>'}</Text>
+                    <AssetChart showSelectors/>
                 </View>
                 <Underline />
-                <View style={[componentStyles.sectionContainer]}>
-                    <Text style={[componentStyles.stockPrice]}>News</Text>
-                    <Text style={[componentStyles.stockPrice]}>News</Text>
-                    <Text style={[componentStyles.stockPrice]}>News</Text>
-                    <Text style={[componentStyles.stockPrice]}>News</Text>
-                    <Text style={[componentStyles.stockPrice]}>News</Text>
-                    <Text style={[componentStyles.stockPrice]}>News</Text>
-                    <Text style={[componentStyles.stockPrice]}>News</Text>
-                    <Text style={[componentStyles.stockPrice]}>News</Text>
-                    <Text style={[componentStyles.stockPrice]}>News</Text>
-                    <Text style={[componentStyles.stockPrice]}>News</Text>
+                <StockBalance/>
+                <Underline />
+                <Description />
+                <Underline />
+                <View style={[componentStyles.balanceContainer]}>
+                    <Text style={[componentStyles.stockName]}>Market Stats {'>'}</Text>
+                    <Text style={[componentStyles.stockName]}>Market Stats {'>'}</Text>
+                    <Text style={[componentStyles.stockName]}>Market Stats {'>'}</Text>
+                    <Text style={[componentStyles.stockName]}>Market Stats {'>'}</Text>
+                    <Text style={[componentStyles.stockName]}>Market Stats {'>'}</Text>
+                    <Text style={[componentStyles.stockName]}>Market Stats {'>'}</Text>
+                    <Text style={[componentStyles.stockName]}>Market Stats {'>'}</Text>
+                    <Text style={[componentStyles.stockName]}>Market Stats {'>'}</Text>
+                    <Text style={[componentStyles.stockName]}>Market Stats {'>'}</Text>
+                    <Text style={[componentStyles.stockName]}>Market Stats {'>'}</Text>
+                    <Text style={[componentStyles.stockName]}>Market Stats {'>'}</Text>
+                    <Text style={[componentStyles.stockName]}>Market Stats {'>'}</Text>
                 </View>
+                <Underline />
+                <NewsSection/>
+                <Underline />
+                <Ratings />
             </ScrollView>
-            <CustomBtn 
+            {/* <CustomBtn 
                 text="Trade" 
                 styles={[componentStyles.tradeButton, {width: mainWidth * 0.90, transform: [{translateX: (mainWidth * 0.9) * -0.5}]}]} 
                 onPress={(e) => {console.log("trade clicked")}}
-            />
-        </View>
+            /> */}
+        </>
     );
 };
 
 const styles = (theme: Theme): ThemedStyles => ({
     mainContainer: {
         flexGrow: 1,
-        padding: 10,
+        padding: 15,
         ...commonStyles.flexColCenter,
         backgroundColor: theme.colors.background,
     },
@@ -98,13 +96,21 @@ const styles = (theme: Theme): ThemedStyles => ({
         //for alignment since position is absolute
         left: "50%",
     },
-    sectionContainer: {
+    newsContainer: {
         flex: 1,
         ...commonStyles.flexColCenter,
+        marginVertical: 10,
+    },
+    balanceContainer: {
+        flex: 1,
+        ...commonStyles.flexColCenter,
+        marginVertical: 10,
     },
     headerContainer: {
         flex: 1,
         ...commonStyles.flexColCenter,
+        marginVertical: 10,
+        padding: 10,
     },
     title: {
         ...theme.fonts.title,

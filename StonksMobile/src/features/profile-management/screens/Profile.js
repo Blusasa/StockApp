@@ -2,6 +2,7 @@ import { View, Text ,StyleSheet, TouchableOpacity} from "react-native";
 import AppStyles from "../../../theme/AppStyles";
 
 const Profile = () => {
+
     const name = "John";
     const username = "johnDoe";
     const email = "johnDoe@gmail.com"

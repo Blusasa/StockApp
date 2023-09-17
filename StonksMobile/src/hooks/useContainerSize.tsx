@@ -1,16 +1,21 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import { LayoutRectangle } from "react-native";
 
-function useContainerSize(): [number, number, Dispatch<SetStateAction<LayoutRectangle>>]
+function useContainerSize(): {width: number, height: number, setter: Dispatch<SetStateAction<LayoutRectangle>>}
 {
-    const [iconContainerSize, setIconContainerSize] = useState<LayoutRectangle>({
+    const [containerSize, setContainerSize] = useState<LayoutRectangle>({
         width: 0,
         height: 0,
         x: 0,
         y: 0
     });
 
-    return [iconContainerSize.width, iconContainerSize.height, setIconContainerSize];
+
+    return {
+        width: containerSize.width,
+        height: containerSize.height,
+        setter: setContainerSize
+    };
 }
 
 export default useContainerSize;

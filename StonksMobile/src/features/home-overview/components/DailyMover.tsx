@@ -18,7 +18,7 @@ const DailyMover = ({stockInfo} : StockInfoProps) : ReactElement => {
     const theme = useTheme();
     const componentStyles = styles(theme);
 
-    let stockIsNegative = stockInfo.percentChange < 0;
+    let stockIsPositive = stockInfo.percentChange > 0;
 
     function round(value: number, decimals: number = 2): string {
         const precision = Math.pow(10, decimals)
@@ -36,10 +36,8 @@ const DailyMover = ({stockInfo} : StockInfoProps) : ReactElement => {
                     style={[componentStyles.percentContainer]}
                     onLayout={(e: LayoutChangeEvent) => setIconContainerSize(e.nativeEvent.layout)}
                 >
-                    {stockIsNegative 
-                    ? <FeatherIcon name={"arrow-down-left"} color={"#ff0000"} size={iconContainerSize.height * 0.85} /> 
-                    : <FeatherIcon name={"arrow-up-right"} color={"#00ff00"} size={iconContainerSize.height * 0.85} />}
-                    <Text style={[componentStyles.percentText, {color: stockIsNegative ? theme.colors.deltaNegative : theme.colors.deltaPositive}]}>
+                    <FeatherIcon isPositive={stockIsPositive} size={iconContainerSize.height * 0.85} /> 
+                    <Text style={[componentStyles.percentText, {color: stockIsPositive ? theme.colors.deltaPositive : theme.colors.deltaNegative}]}>
                             {round(stockInfo.percentChange, 2)}%
                     </Text>
                 </View>

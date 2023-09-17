@@ -12,7 +12,7 @@ const DailyMoverContainer = () : ReactElement => {
   const componentStyles = styles(theme);
 
   return (
-    <View style={[componentStyles.container, commonStyles.devBorder]}>
+    <View style={[componentStyles.container]}>
       <Text style={[componentStyles.header]}>Daily Movers</Text>
       <FlatList
         data={Movers}

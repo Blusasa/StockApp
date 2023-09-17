@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactElement } from "react";
-import { View, ActivityIndicator, StyleSheet, Pressable, Text} from "react-native";
+import { View, ActivityIndicator, StyleSheet, Pressable, Text, Dimensions} from "react-native";
 
 import StockBox from "./StockBox";
 import { Theme, commonStyles, useTheme } from "../../../theme";
@@ -51,7 +51,7 @@ const FavoritedStocks = () : ReactElement => {
     <View style={[componentStyles.sectionContainer, commonStyles.devBorder]}>
         <Text style={[componentStyles.header]}>Prices</Text>
         {quoteData.map((value: IStockInfo, index: number) => (
-          <StockBox key={index} stockInfo={value} />
+          <StockBox key={index} stockInfo={value} showCharts/>
         ))}
         <Pressable style={[componentStyles.button]}>
           <Text style={componentStyles.buttonTxt}>View All -{'>'}</Text>

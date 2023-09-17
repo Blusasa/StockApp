@@ -35,6 +35,10 @@ const justifySpaceBW : ViewStyle = {
     justifyContent: "space-between"
 }
 
+const justifySpaceAround : ViewStyle = {
+    justifyContent: "space-around",
+}
+
 const alignCenter : ViewStyle = {
     alignItems: "center"
 }
@@ -76,6 +80,10 @@ export const commonStyles = StyleSheet.create({
     flexRowSpaceBW: {
         ...flexRow,
         ...justifySpaceBW,
+    },
+    flexRowSpaceAround: {
+        ...flexRow,
+        ...justifySpaceAround,
     },
     flexRowStart: {
         //default justifyContent position is flex-start

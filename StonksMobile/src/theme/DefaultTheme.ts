@@ -5,7 +5,7 @@ export const DefaultTheme: Theme = {
         primary: "#E91EAC",
         background: "#160C33",
         highlights: "#B401FC",
-        action: "#fecb61",
+        action: "#54EF46",
         transparent: "rgba(0,0,0,0)",
         text: "#ffffff",
         border: "",

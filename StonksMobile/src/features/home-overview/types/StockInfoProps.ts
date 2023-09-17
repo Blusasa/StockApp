@@ -1,7 +1,8 @@
 import { IStockInfo } from "types"
 
 type StockInfoProps = {
-    stockInfo: IStockInfo
+    stockInfo: IStockInfo,
+    showCharts?: boolean
 }
 
 export default StockInfoProps;

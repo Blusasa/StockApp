@@ -4,8 +4,8 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export type CustomInputProps = {
     placeholderText: string,
-    styles: ViewStyle | TextStyle,
-    hideGradient: boolean
+    styles?: ViewStyle | TextStyle,
+    hideGradient?: boolean
 }
 
 const CustomTextInput = ({ placeholderText, styles, hideGradient }: CustomInputProps) => {

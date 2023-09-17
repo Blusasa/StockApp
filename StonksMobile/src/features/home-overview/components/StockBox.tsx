@@ -1,22 +1,18 @@
-import { View, Text, StyleSheet, Pressable, LayoutRectangle, LayoutChangeEvent } from "react-native";
-import { useState } from "react";
+import { View, Text, StyleSheet, Pressable, LayoutChangeEvent } from "react-native";
 
 import ArrowIcon from "../../../assets/rneIcons/ArrowIcon";
 import { useTheme, Theme, commonStyles } from "../../../theme";
 
 import StockInfoProps from "../types/StockInfoProps";
 import AssetChart from "../../../components/AssetChart";
+import useContainerSize from "../../../hooks/useContainerSize";
+import { ThemedStyles, useThemedStyles } from "../../../hooks/useThemedStyles";
 
-const StockBox = ({stockInfo}: StockInfoProps): JSX.Element => {
-    const [iconContainerSize, setIconContainerSize] = useState<LayoutRectangle>({
-        width: 0,
-        height: 0,
-        x: 0,
-        y: 0
-      });
+const StockBox = ({stockInfo, showCharts}: StockInfoProps): JSX.Element => {
 
     const theme = useTheme();
-    const componentStyles = stockBoxStyles(theme);
+    const componentStyles = useThemedStyles(stockBoxStyles);
+    const {height: iconHeight, setter: setIconContSize} = useContainerSize();
 
     let stockIsPositive = stockInfo.percentChange > 0;
 
@@ -35,14 +31,14 @@ const StockBox = ({stockInfo}: StockInfoProps): JSX.Element => {
                     <Text style={[componentStyles.stockName]}>{stockInfo.name}</Text>
                     <Text style={[componentStyles.stockBoxSubText]}>{stockInfo.symbol}</Text>
                 </View>
-                <AssetChart />
+                {showCharts && <AssetChart/>}
                 <View style={[componentStyles.pricingContainer]}>
                         <Text style={componentStyles.stockName}>${round(stockInfo.currentPrice)}</Text>
                         <View 
                             style={[componentStyles.percentContainer]}
-                            onLayout={(e: LayoutChangeEvent) => setIconContainerSize(e.nativeEvent.layout)}
+                            onLayout={(e: LayoutChangeEvent) => setIconContSize(e.nativeEvent.layout)}
                         >
-                            <ArrowIcon isPositive={stockIsPositive} size={iconContainerSize.height * 0.85} />
+                            <ArrowIcon isPositive={stockIsPositive} size={iconHeight * 0.85} />
                             <Text 
                                 style={[componentStyles.stockBoxSubText, 
                                 {color: stockIsPositive ? theme.colors.deltaPositive : theme.colors.deltaNegative}]}>
@@ -55,9 +51,7 @@ const StockBox = ({stockInfo}: StockInfoProps): JSX.Element => {
     );
 }
 
-const stockBoxStyles = (theme: Theme) => {
-    return(
-        StyleSheet.create({
+const stockBoxStyles = (theme: Theme): ThemedStyles => ({
             pressable: {
                 flex: 1,
                 ...commonStyles.flexColCenter,
@@ -95,8 +89,6 @@ const stockBoxStyles = (theme: Theme) => {
             pressableIn: {
                 backgroundColor: theme.colors.pressableIn
             }
-        })
-    );
-};
+});
 
 export default StockBox;
